@@ -1,7 +1,50 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../layout/AppLayout.style.css";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { Outlet } from "react-router-dom";
+import logo from "../assets/logo/netflix-logo.png";
+import searchIcon from "../assets/icon/search.png";
 
 const AppLayout = () => {
-  return <div>navbar</div>;
+  return (
+    <div>
+      <Navbar expand="lg" className="bg-black">
+        <Container fluid>
+          {/* 로고 */}
+          <Navbar.Brand href="#" className="text-danger fw-bold">
+            <div className="logo-wrap">
+              <img src={logo} alt="Netflix Logo" width="100%" />
+            </div>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
+              <Nav.Link href="#action1" className="text-white">
+                Home
+              </Nav.Link>
+              <Nav.Link href="#action2" className="text-white">
+                Tv Series
+              </Nav.Link>
+              {/* <Nav.Link href="#action2">Movies</Nav.Link>
+              <Nav.Link href="#action2">Recently Added</Nav.Link>
+              <Nav.Link href="#action2">MyList</Nav.Link> */}
+            </Nav>
+            <Form className="d-flex">
+              <button className="search-btn">
+                <img src={searchIcon} alt="search" width="100%" />
+              </button>
+            </Form>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Outlet />
+    </div>
+  );
 };
 
 export default AppLayout;
