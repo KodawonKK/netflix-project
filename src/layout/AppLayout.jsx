@@ -1,7 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../layout/AppLayout.style.css";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
@@ -9,11 +8,12 @@ import Navbar from "react-bootstrap/Navbar";
 import { Outlet } from "react-router-dom";
 import logo from "../assets/logo/netflix-logo.png";
 import searchIcon from "../assets/icon/search.png";
+import ProfileImg from "../assets/profile/profile-img.png";
 
 const AppLayout = () => {
   return (
     <div>
-      <Navbar expand="lg" className="bg-black">
+      <Navbar expand="lg" className="navbar bg-black">
         <Container fluid>
           {/* 로고 */}
           <Navbar.Brand href="#" className="text-danger fw-bold">
@@ -34,10 +34,15 @@ const AppLayout = () => {
               <Nav.Link href="#action2">Recently Added</Nav.Link>
               <Nav.Link href="#action2">MyList</Nav.Link> */}
             </Nav>
-            <Form className="d-flex">
+            <Form className="d-flex nav-right">
+              {/* 검색 버튼 */}
               <button className="search-btn">
                 <img src={searchIcon} alt="search" width="100%" />
               </button>
+              {/* 프로필 */}
+              <div className="profile-wrap">
+                <img src={ProfileImg} alt="profileimage" width="100%" />
+              </div>
             </Form>
           </Navbar.Collapse>
         </Container>

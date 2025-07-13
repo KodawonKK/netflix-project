@@ -1,9 +1,25 @@
+.navbar {
+  position: sticky;
+  top: 0px;
+  height: auto;
+  min-height: 70px;
+  z-index: 1;
+  padding: 0 4%;
+}
 .logo-wrap {
-  width: 9.25rem;
-  height: 2.5rem;
+  width: 5.8rem;
+}
+.nav-right {
+  gap: 10px;
 }
 .search-btn {
   border: 0;
   background: none;
-  width: 20px;
+  width: 22px;
+}
+.profile-wrap {
+  background: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
 }
