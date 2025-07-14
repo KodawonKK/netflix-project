@@ -1,0 +1,7 @@
+.popular-movie-wrap {
+  padding: 20px 60px;
+  background: none;
+  /* position: absolute; */
+  background-color: #000;
+  bottom: -1px;
+}

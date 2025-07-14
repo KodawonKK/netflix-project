@@ -4,15 +4,16 @@ import "./Banner.style.css";
 import Button from "react-bootstrap/Button";
 import InfoIcon from "../../../../assets/icon/info.svg";
 import Play from "../../../../assets/icon/play.svg";
+import { Alert } from "bootstrap";
+import PopularMovieSlide from "../PopularMovieSlide/PopularMovieSlide";
 
 const Banner = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
-  console.log("ddd", data);
   if (isLoading) {
     <h1>...Loading</h1>;
   }
   if (isError) {
-    <h1>{error.message};</h1>;
+    <Alert>{error.message};</Alert>;
   }
   const imgUrl = `https://image.tmdb.org/t/p/original${data?.results[1]?.backdrop_path}`;
 
