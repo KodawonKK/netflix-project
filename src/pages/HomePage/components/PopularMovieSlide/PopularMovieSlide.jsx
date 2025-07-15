@@ -20,11 +20,39 @@ const PopularMovieSlide = () => {
   }
   return (
     <div className="popular-movie-wrap">
-      <h1>인기 시리즈</h1>
-      <Swiper modules={[Navigation]} slidesPerView={6.5} spaceBetween={30} navigation={true} loop={true} className="mySwiper" allowTouchMove={false}>
+      <h1>인기 영화</h1>
+      <Swiper
+        modules={[Navigation]}
+        slidesPerView={6.5}
+        spaceBetween={5}
+        navigation={true}
+        loop={data?.results.length > 7}
+        breakpoints={{
+          280: {
+            slidesPerView: 2.5
+          },
+          500: {
+            slidesPerView: 2.5
+          },
+          800: {
+            slidesPerView: 3.5
+          },
+          1100: {
+            slidesPerView: 4.5
+          },
+          1400: {
+            slidesPerView: 5.5
+          },
+          2400: {
+            slidesPerView: 6.5
+          }
+        }}
+        className="mySwiper"
+        allowTouchMove={false}
+      >
         {data?.results.map((movie, idx) => (
-          <SwiperSlide>
-            <MovieCard movie={movie} key={idx} />
+          <SwiperSlide key={idx}>
+            <MovieCard movie={movie} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -14,7 +14,7 @@
 }
 .banner-title-wrap {
   position: absolute;
-  left: 10%;
+  left: 5%;
   top: 40%;
   color: #fff;
 }
@@ -23,7 +23,7 @@
   font-weight: bold;
 }
 .banner-overview {
-  max-width: 500px;
+  max-width: 40%;
   font-size: 1.2vw;
   word-break: keep-all;
 }
