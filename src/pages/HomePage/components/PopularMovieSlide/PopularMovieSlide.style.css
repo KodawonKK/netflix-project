@@ -12,6 +12,7 @@
 .popular-movie-wrap h1 {
   font-size: 1.4vw;
   font-weight: bold;
+  display: inline-block;
 }
 .swiper-button-prev {
   color: #fff;

@@ -26,11 +26,10 @@ const PopularMovieSlide = () => {
   };
   return (
     <div className="popular-movie-wrap">
-      <div class="kind-title">
+      <div className="kind-title">
         <h1>인기 영화</h1>
         <div className="custom-pagination"></div>
       </div>
-
       <Swiper
         modules={[Navigation, Pagination]}
         slidesPerView={6.5}
