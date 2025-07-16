@@ -3,7 +3,7 @@
   top: 0px;
   height: auto;
   min-height: 70px;
-  z-index: 1;
+  z-index: 9999;
   padding: 0 4%;
 }
 .logo-wrap {

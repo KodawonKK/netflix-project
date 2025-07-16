@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { usePopularMoviesQuery } from "../../../../hooks/usePopularMovies";
 import { Alert } from "bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,10 +9,26 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import MovieCard from "../MovieCard/MovieCard";
 import "./PopularMovieSlide.style.css";
+import { hover } from "@testing-library/user-event/dist/hover";
 
 const PopularMovieSlide = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
-  console.log(data);
+  const [hoverCardInfo, setHoverCardInfo] = useState(null);
+  const [modalPos, setModalPos] = useState({ top: 0, left: 0 });
+
+  const handleHover = (movie, ref) => {
+    if (!movie || !ref?.current) {
+      setHoverCardInfo(null);
+      return;
+    }
+    const rect = ref?.current.getBoundingClientRect();
+    console.log(rect);
+    setHoverCardInfo(movie);
+    setModalPos({
+      top: rect.top,
+      left: rect.left + 30
+    });
+  };
 
   if (isLoading) {
     <h1>...Loading</h1>;
@@ -24,6 +40,7 @@ const PopularMovieSlide = () => {
     clickable: false,
     el: ".custom-pagination"
   };
+
   return (
     <div className="popular-movie-wrap">
       <div className="kind-title">
@@ -62,10 +79,23 @@ const PopularMovieSlide = () => {
       >
         {data?.results.map((movie, idx) => (
           <SwiperSlide key={idx}>
-            <MovieCard movie={movie} />
+            <MovieCard movie={movie} onHover={handleHover} />
           </SwiperSlide>
         ))}
       </Swiper>
+      {
+        <div className="preview-modal" style={{ top: modalPos.top, left: modalPos.left }}>
+          <img src={`https://media.themoviedb.org/t/p/w355_and_h200_multi_faces${hoverCardInfo?.backdrop_path}`} width="100%" alt="thumbnail" />
+          <div className="preview-movie-info">
+            <h4 className="movie-title">{hoverCardInfo?.title}</h4>
+            {hoverCardInfo?.genre_ids.map((genre, idx) => (
+              <span className={`movie-genre ${idx === 0 && "no-bullet"}`} key={idx}>
+                {genre}
+              </span>
+            ))}
+          </div>
+        </div>
+      }
     </div>
   );
 };
