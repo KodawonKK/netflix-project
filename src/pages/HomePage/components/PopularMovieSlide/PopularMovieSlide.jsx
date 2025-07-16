@@ -3,8 +3,10 @@ import { usePopularMoviesQuery } from "../../../../hooks/usePopularMovies";
 import { Alert } from "bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 import MovieCard from "../MovieCard/MovieCard";
 import "./PopularMovieSlide.style.css";
 
@@ -18,14 +20,23 @@ const PopularMovieSlide = () => {
   if (isError) {
     <Alert>{error.message};</Alert>;
   }
+  const pagination = {
+    clickable: false,
+    el: ".custom-pagination"
+  };
   return (
     <div className="popular-movie-wrap">
-      <h1>인기 영화</h1>
+      <div class="kind-title">
+        <h1>인기 영화</h1>
+        <div className="custom-pagination"></div>
+      </div>
+
       <Swiper
-        modules={[Navigation]}
+        modules={[Navigation, Pagination]}
         slidesPerView={6.5}
         spaceBetween={5}
         navigation={true}
+        pagination={pagination}
         loop={data?.results.length > 7}
         breakpoints={{
           280: {

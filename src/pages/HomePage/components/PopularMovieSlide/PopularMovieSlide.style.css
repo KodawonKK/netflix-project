@@ -2,20 +2,33 @@
   padding: 0px 0px 20px 4%;
   background: none;
   background-color: #000;
-  bottom: -1px;
+  position: relative;
 }
-
+.kind-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 .popular-movie-wrap h1 {
   font-size: 1.4vw;
   font-weight: bold;
 }
-
 .swiper-button-prev {
   color: #fff;
-  /* display: none; */
 }
 .swiper-button-next:hover {
 }
 .swiper-button-next {
   color: #fff;
+}
+.custom-pagination {
+  width: unset !important;
+  padding: 0 5px 0 0;
+}
+.custom-pagination .swiper-pagination-bullet {
+  background: #fff;
+  border-radius: 0;
+  width: 12px;
+  height: 2px;
+  margin: 0 1px 0 0 !important;
 }
