@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import "./MovieCard.style.css";
+import React, { useRef } from 'react';
+import './MovieCard.style.css';
 
 const MovieCard = ({ movie, onHover }) => {
   const ref = useRef(null);
@@ -8,8 +8,17 @@ const MovieCard = ({ movie, onHover }) => {
 
   return (
     <div className="movie-card-wrap">
-      <div className="movie-card" ref={ref} onMouseEnter={() => onHover(movie, ref)}>
-        <img src={imgUrl} width="100%" alt="thumbnail" onMouseLeave={() => onHover(movie, ref)} />
+      <div
+        className="movie-card"
+        ref={ref}
+        onMouseEnter={() => onHover(movie, ref)}
+      >
+        <img
+          src={imgUrl}
+          width="100%"
+          alt="thumbnail"
+          onMouseLeave={() => onHover(movie, ref)}
+        />
       </div>
     </div>
   );
