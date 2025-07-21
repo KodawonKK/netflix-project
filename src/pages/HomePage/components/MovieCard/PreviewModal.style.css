@@ -4,7 +4,7 @@
   background: #181818;
   color: #fff;
   z-index: 9999;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   transform: scale(1);
   cursor: pointer;
   border-radius: 5px;

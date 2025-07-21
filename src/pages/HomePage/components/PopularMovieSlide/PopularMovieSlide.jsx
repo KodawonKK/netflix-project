@@ -88,32 +88,6 @@ const PopularMovieSlide = () => {
       </Swiper>
       <div className="custom-navigation"></div>
       {/* card-preview-modal */}
-      {/* <div
-        className="preview-modal"
-        style={{ top: modalPos.top, left: modalPos.left, opacity: opacity }}
-        onMouseEnter={() => setOpacity(1)}
-        onMouseLeave={() => {
-          setOpacity(0);
-        }}
-      >
-        <img
-          src={`https://media.themoviedb.org/t/p/w355_and_h200_multi_faces${hoverCardInfo?.backdrop_path}`}
-          width="100%"
-          alt="thumbnail"
-        />
-        <div className="preview-movie-info">
-          <h4 className="movie-title">{hoverCardInfo?.title}</h4>
-          {hoverCardInfo?.genre_ids.map((genre, idx) => (
-            <span
-              className={`movie-genre ${idx === 0 && 'no-bullet'}`}
-              key={idx}
-            >
-              {genre}
-            </span>
-          ))}
-        </div>
-      </div> */}
-
       <PreviewModal
         movie={hoverCardInfo}
         position={modalPos}
