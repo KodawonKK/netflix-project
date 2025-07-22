@@ -20,7 +20,7 @@ const PreviewModal = ({ movie, position, onMouseEnter, onMouseLeave }) => {
   const runtimeKR = `${runHours}시간 ${runMinutes}분`;
   const krGradeInfo = movieGrade?.find(item => item.iso_3166_1 === 'KR');
   const cert = krGradeInfo?.release_dates[0]?.certification;
-  const movieCert = cert ? cert : '19';
+  const movieCert = cert === undefined || cert === '' ? '19' : cert;
 
   const ratingIcons = {
     12: Rating12,
