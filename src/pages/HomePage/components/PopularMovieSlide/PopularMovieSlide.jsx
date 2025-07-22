@@ -28,7 +28,7 @@ const PopularMovieSlide = () => {
     setHoverCardInfo(movie);
     setModalPos({
       top: rect.top,
-      left: rect.left,
+      left: rect.left + 10,
     });
   };
 

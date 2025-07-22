@@ -21,6 +21,13 @@
   font-size: 16px;
   margin-bottom: 0;
 }
+.movie-info {
+  display: flex;
+  gap: 10px;
+}
+.movie-runtime {
+  line-height: 32px;
+}
 .movie-title {
   font-size: 16px !important;
 }
