@@ -1,4 +1,4 @@
-.popular-movie-wrap {
+.movie-slider-wrap {
   background-color: #000;
   padding-bottom: 20px;
 }
@@ -7,15 +7,26 @@
   justify-content: space-between;
   align-items: baseline;
 }
-.popular-movie-wrap h1 {
+.movie-slider-wrap h1 {
   font-size: 1.4vw;
   padding: 10px 4% 0px;
   font-weight: bold;
   display: inline-block;
 }
-.popular-movie-slider {
+.movie-slider {
   padding: 0 0 0 4%;
   position: relative;
+}
+.movie-slider.top-contents {
+  padding: 0 0 20px 4%;
+}
+.rank-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rank-wrap .rank-poster {
+  width: 44%;
 }
 /* Swiper */
 .custom-pagination {

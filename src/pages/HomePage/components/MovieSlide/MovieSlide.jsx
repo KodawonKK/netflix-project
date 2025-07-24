@@ -7,17 +7,39 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import './PopularMovieSlide.style.css';
+import './MovieSlide.style.css';
 import MovieCard from '../MovieCard/MovieCard';
 import PreviewModal from '../MovieCard/PreviewModal';
 import Arrow from '../../../../assets/icon/arrow.png';
+import rank1 from '../../../../assets/icon/rank1.svg';
+import rank2 from '../../../../assets/icon/rank2.svg';
+import rank3 from '../../../../assets/icon/rank3.svg';
+import rank4 from '../../../../assets/icon/rank4.svg';
+import rank5 from '../../../../assets/icon/rank5.svg';
+import rank6 from '../../../../assets/icon/rank6.svg';
+import rank7 from '../../../../assets/icon/rank7.svg';
+import rank8 from '../../../../assets/icon/rank8.svg';
+import rank9 from '../../../../assets/icon/rank9.svg';
+import rank10 from '../../../../assets/icon/rank10.svg';
 
-const PopularMovieSlide = () => {
+const MovieSlide = ({ title, isTopRank }) => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
   const [hoverCardInfo, setHoverCardInfo] = useState(null);
   const [modalPos, setModalPos] = useState({ top: 0, left: 0 });
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const rankImg = {
+    1: rank1,
+    2: rank2,
+    3: rank3,
+    4: rank4,
+    5: rank5,
+    6: rank6,
+    7: rank7,
+    8: rank8,
+    9: rank9,
+    10: rank10,
+  };
 
   const handleHover = (movie, ref) => {
     if (!movie || !ref?.current) {
@@ -45,13 +67,13 @@ const PopularMovieSlide = () => {
   };
 
   return (
-    <div className="popular-movie-wrap">
+    <div className="movie-slider-wrap">
       <div className="kind-title">
-        <h1>인기 영화</h1>
+        <h1>{title}</h1>
         <div className="custom-pagination"></div>
       </div>
 
-      <div className="popular-movie-slider">
+      <div className={isTopRank ? 'movie-slider top-contents' : 'movie-slider'}>
         <Swiper
           modules={[Navigation, Pagination]}
           slidesPerView={6.5}
@@ -89,12 +111,27 @@ const PopularMovieSlide = () => {
           className="mySwiper"
           allowTouchMove={false}
         >
-          {data?.results.map((movie, idx) => (
-            <SwiperSlide key={idx}>
-              <MovieCard movie={movie} onHover={handleHover} />
-            </SwiperSlide>
-          ))}
+          {data?.results.map((movie, idx) => {
+            if (isTopRank && idx > 10) return null;
+            return (
+              <SwiperSlide key={idx}>
+                <div className={isTopRank ? 'rank-wrap' : ''}>
+                  {isTopRank && (
+                    <div className="rank-poster">
+                      <img src={rankImg[idx + 1]} alt={`top${idx + 1}`} />
+                    </div>
+                  )}
+                  <MovieCard
+                    movie={movie}
+                    onHover={handleHover}
+                    type={isTopRank ? 'toprank' : ''}
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
+        {/* arrows */}
         <span className="custom-arrow-wrap ">
           <button ref={prevRef} className="custom-arrow custom-prev">
             <img src={Arrow} alt="왼쪽화살표" />
@@ -107,7 +144,7 @@ const PopularMovieSlide = () => {
         </span>
       </div>
 
-      {/* card-preview-modal */}
+      {/* preview-modal */}
       <PreviewModal
         movie={hoverCardInfo}
         position={modalPos}
@@ -118,4 +155,4 @@ const PopularMovieSlide = () => {
   );
 };
 
-export default PopularMovieSlide;
+export default MovieSlide;
