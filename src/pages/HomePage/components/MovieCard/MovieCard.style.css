@@ -9,6 +9,12 @@
   /* transition: 0.5s;
   position: relative; */
 }
+.movie-card.top-rank {
+  width: 70%;
+}
+.movie-card.top-rank img {
+  border-radius: 0.2vw;
+}
 .movie-card:hover {
   /* opacity: 0; */
   transition: all 1s;

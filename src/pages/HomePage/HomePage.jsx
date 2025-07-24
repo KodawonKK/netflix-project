@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from './components/Banner/Banner';
 import PopularMovieSlide from './components/PopularMovieSlide/PopularMovieSlide';
+import TopContentsSlide from './components/TopContentsSlide/TopContentsSlide';
 
 // 1.배너 => popular 영화를 들고와서 첫번 째 아이템 보여주기
 // 2. popular movie
@@ -11,7 +12,7 @@ const HomePage = () => {
     <div>
       <Banner />
       <PopularMovieSlide />
-      <PopularMovieSlide />
+      <TopContentsSlide />
     </div>
   );
 };

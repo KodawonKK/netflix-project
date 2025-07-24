@@ -1,0 +1,16 @@
+<svg
+  id="rank-1"
+  width="100%"
+  height="100%"
+viewBox="-30 0 100 160"
+  xmlns="http://www.w3.org/2000/svg"
+  class="svg-icon svg-icon-rank-1 top-10-rank"
+>
+  <path
+    d="M35.377 152H72V2.538L2 19.362v30.341l33.377-8.459V152z"
+    fill="#000"
+    stroke="#595959"
+    stroke-width="4"
+  />
+  
+</svg>

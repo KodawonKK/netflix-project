@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
 import { Alert } from 'bootstrap';
 import { Swiper, SwiperSlide } from 'swiper/react';
