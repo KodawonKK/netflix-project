@@ -5,22 +5,30 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import logo from '../assets/logo/netflix-logo.png';
 import searchIcon from '../assets/icon/search.png';
 import ProfileImg from '../assets/profile/profile-img.png';
 
 const AppLayout = () => {
-  const menu = ['홈', '시리즈', '영화', '내가 찜한 리스트'];
+  const menu = [
+    { title: '홈', url: '/' },
+    { title: '시리즈', url: '/series' },
+    { title: '영화', url: '/movies' },
+    { title: '내가 찜한 리스트', url: '/' },
+  ];
+
   return (
     <div>
       <Navbar expand="lg" className="navbar bg-black">
         <Container fluid>
           {/* 로고 */}
-          <Navbar.Brand href="#" className="text-danger fw-bold">
-            <div className="logo-wrap">
-              <img src={logo} alt="Netflix Logo" width="100%" />
-            </div>
+          <Navbar.Brand className="text-danger fw-bold">
+            <Link to="/">
+              <div className="logo-wrap">
+                <img src={logo} alt="Netflix Logo" width="100%" />
+              </div>
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -30,8 +38,8 @@ const AppLayout = () => {
               navbarScroll
             >
               {menu.map((item, idx) => (
-                <Nav.Link href="#action1" className="text-white" key={idx}>
-                  {item}
+                <Nav.Link href={item.url} className="text-white" key={idx}>
+                  {item.title}
                 </Nav.Link>
               ))}
             </Nav>
