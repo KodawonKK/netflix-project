@@ -1,20 +1,20 @@
 import React from 'react';
-import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
+import { usePopularMoviesQuery } from '../../../../hooks/movie/usePopularMovies';
 import './Banner.style.css';
 import Button from 'react-bootstrap/Button';
 import InfoIcon from '../../../../assets/icon/info.svg';
 import Play from '../../../../assets/icon/play.svg';
 import { Alert } from 'bootstrap';
 
-const Banner = () => {
-  const { data, isLoading, isError, error } = usePopularMoviesQuery();
-  if (isLoading) {
-    <h1>...Loading</h1>;
-  }
-  if (isError) {
-    <Alert>{error.message};</Alert>;
-  }
-  const imgUrl = `https://image.tmdb.org/t/p/original${data?.results[1]?.backdrop_path}`;
+const Banner = ({ data, kind }) => {
+  // const { data, isLoading, isError, error } = usePopularMoviesQuery();
+  // if (isLoading) {
+  //   <h1>...Loading</h1>;
+  // }
+  // if (isError) {
+  //   <Alert>{error.message};</Alert>;
+  // }
+  const imgUrl = `https://image.tmdb.org/t/p/original${data?.results[0]?.backdrop_path}`;
 
   return (
     <div className="banner-wrap">
@@ -22,10 +22,10 @@ const Banner = () => {
       <img src={imgUrl} alt="배너 이미지" />
       <div className="banner-title-wrap">
         <h3 className="common-banner-txt banner-title">
-          {data?.results[1]?.title}
+          {kind === 'movie' ? data?.results[0]?.title : data?.results[0]?.name}
         </h3>
         <p className="common-banner-txt banner-overview">
-          {data?.results[1]?.overview}
+          {data?.results[0]?.overview}
         </p>
         <div className="banner-btn-wrap">
           <Button variant="light" size="sm" className="banner-btn">
