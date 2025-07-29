@@ -1,10 +1,10 @@
 import React from 'react';
 import ContentSlider from '../../common/ContentSlider/ContentSlider';
 
-import { usePopularSeriesQuery } from '../../hooks/usePopularSeries';
-import { useOntheAirSeriesQuery } from '../../hooks/useOntheAirSeries';
-import { useTopRatedSeriesQuery } from '../../hooks/useTopRatedSeries';
-import { useAiringSeriesQuery } from '../../hooks/useAiringSeries';
+import { usePopularSeriesQuery } from '../../hooks/tv/usePopularSeries';
+import { useOntheAirSeriesQuery } from '../../hooks/tv/useOntheAirSeries';
+import { useTopRatedSeriesQuery } from '../../hooks/tv/useTopRatedSeries';
+import { useAiringSeriesQuery } from '../../hooks/tv/useAiringSeries';
 
 const SeriesPage = () => {
   const popular = usePopularSeriesQuery();
