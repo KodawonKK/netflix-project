@@ -26,6 +26,11 @@
   max-width: 40%;
   font-size: 1.2vw;
   word-break: keep-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .banner-btn-wrap {
   display: flex;
