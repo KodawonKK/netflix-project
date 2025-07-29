@@ -1,10 +1,11 @@
-import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import AppLayout from "./layout/AppLayout";
-import HomePage from "../src/pages/HomePage/HomePage";
-import MoviePage from "./pages/Movies/MoviePage";
-import MovieDetailPage from "./pages/MovieDetail/MovieDetailPage";
-import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import AppLayout from './layout/AppLayout';
+import HomePage from '../src/pages/HomePage/HomePage';
+import MoviePage from './pages/Movies/MoviePage';
+import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import SeriesPage from './pages/Series/SeriesPage';
 
 // 홈페이지 /
 // 영화 전체 보여주는 페이지 (검색) /movies
@@ -19,6 +20,9 @@ function App() {
         <Route path="/movies">
           <Route index element={<MoviePage />} />
           <Route path=":id" element={<MovieDetailPage />} />
+        </Route>
+        <Route path="/series">
+          <Route index element={<SeriesPage />} />
         </Route>
       </Route>
       {/* 404 page */}
