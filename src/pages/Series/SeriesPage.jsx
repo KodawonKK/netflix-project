@@ -11,6 +11,7 @@ const SeriesPage = () => {
   const topRated = useTopRatedSeriesQuery();
   const onTheAir = useOntheAirSeriesQuery();
   const airing = useAiringSeriesQuery();
+
   const slideConfigs = [
     {
       title: '인기 TV 시리즈',
