@@ -1,10 +1,17 @@
 .navbar {
-  position: sticky;
+  /* position: sticky; */
+  position: fixed;
+  width: 100%;
   top: 0px;
   height: auto;
   min-height: 70px;
   z-index: 9999;
   padding: 0 4%;
+  background: linear-gradient(to bottom, #141414, rgba(0, 0, 0, 0));
+  transition: all 1s ease;
+}
+.header.scrolled {
+  background: #141414;
 }
 .logo-wrap {
   width: 5.8rem;

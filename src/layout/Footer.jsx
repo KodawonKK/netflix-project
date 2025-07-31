@@ -47,21 +47,21 @@ const Footer = () => {
             ))}
           </div>
           <div className="copyright">
-            <div class="copy-text">
+            <div className="copy-text">
               넷플릭스서비시스코리아 유한회사 통신판매업신고번호:
               제2018-서울종로-0426호 전화번호: 00-308-321-0161 (수신자 부담)
             </div>
-            <div class="copy-text">대표: 레지널드 숀 톰프슨</div>
-            <div class="copy-text">이메일 주소: korea@netflix.com</div>
-            <div class="copy-text">
+            <div className="copy-text">대표: 레지널드 숀 톰프슨</div>
+            <div className="copy-text">이메일 주소: korea@netflix.com</div>
+            <div className="copy-text">
               주소: 대한민국 서울특별시 종로구 우정국로 26, 센트로폴리스 A동
               20층 우편번호 03161
             </div>
-            <div class="copy-text">사업자등록번호: 165-87-00119</div>
-            <div class="copy-text">
+            <div className="copy-text">사업자등록번호: 165-87-00119</div>
+            <div className="copy-text">
               클라우드 호스팅: Amazon Web Services Inc.
             </div>
-            <div id="" class="copy-text">
+            <div id="" className="copy-text">
               <a href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=1658700119">
                 공정거래위원회 웹사이트
               </a>

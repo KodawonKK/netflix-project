@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../layout/AppLayout.style.css';
 import Container from 'react-bootstrap/Container';
@@ -12,6 +12,8 @@ import ProfileImg from '../assets/profile/profile-img.png';
 import Footer from './Footer';
 
 const AppLayout = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const menu = [
     { title: '홈', url: '/' },
     { title: '시리즈', url: '/series' },
@@ -19,9 +21,21 @@ const AppLayout = () => {
     { title: '내가 찜한 리스트', url: '/' },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div>
-      <Navbar expand="lg" className="navbar bg-black">
+      <Navbar
+        expand="lg"
+        className={`header ${isScrolled ? 'scrolled' : ''} navbar`}
+      >
         <Container fluid>
           {/* 로고 */}
           <Navbar.Brand className="text-danger fw-bold">
