@@ -29,7 +29,7 @@ const Footer = () => {
     <div>
       <div className="footer-wrap">
         <div className="footer">
-          <div class="social-links">
+          <div className="social-links">
             {icon.map((item, idx) => (
               <a
                 href={item.url}
@@ -41,12 +41,12 @@ const Footer = () => {
               </a>
             ))}
           </div>
-          <div class="footer-menu">
+          <div className="footer-menu">
             {menu.map((item, idx) => (
               <span key={idx}>{item}</span>
             ))}
           </div>
-          <div class="copyright">
+          <div className="copyright">
             <div class="copy-text">
               넷플릭스서비시스코리아 유한회사 통신판매업신고번호:
               제2018-서울종로-0426호 전화번호: 00-308-321-0161 (수신자 부담)
