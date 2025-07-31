@@ -9,6 +9,7 @@ import { Link, Outlet } from 'react-router-dom';
 import logo from '../assets/logo/netflix-logo.png';
 import searchIcon from '../assets/icon/search.png';
 import ProfileImg from '../assets/profile/profile-img.png';
+import Footer from './Footer';
 
 const AppLayout = () => {
   const menu = [
@@ -34,7 +35,7 @@ const AppLayout = () => {
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
+              style={{ maxHeight: '100px', fontSize: '12px' }}
               navbarScroll
             >
               {menu.map((item, idx) => (
@@ -57,6 +58,7 @@ const AppLayout = () => {
         </Container>
       </Navbar>
       <Outlet />
+      <Footer />
     </div>
   );
 };
