@@ -3,11 +3,14 @@ import { createPortal } from 'react-dom';
 import './PreviewModal.style.css';
 import { useMoviesDetailQuery } from '../../hooks/movie/useMovieDetail';
 import { useMoviesCertificationQuery } from '../../hooks/movie/useMovieCertification';
-
 import Rating12 from '../../assets/icon/rating12.svg';
 import Rating15 from '../../assets/icon/rating15.svg';
 import Rating19 from '../../assets/icon/rating19.svg';
 import RatingALL from '../../assets/icon/ratingAll.svg';
+import OpenIcon from '../../assets/icon/open.svg';
+import Play from '../../assets/icon/play.svg';
+import Like from '../../assets/icon/like.svg';
+import Plus from '../../assets/icon/plus.svg';
 import { useTVDetailQuery } from '../../hooks/tv/useTVDetail';
 
 const PreviewModal = ({
@@ -30,7 +33,6 @@ const PreviewModal = ({
   const episode = `에피소드 ${tvInfo?.number_of_episodes}개`;
   const season = tvInfo?.number_of_seasons;
   const tvDetailInfo = season >= 2 ? `시즌 ${season}개` : episode;
-  console.log(tvInfo);
   const krGradeInfo = movieGrade?.find(item => item.iso_3166_1 === 'KR');
   const cert = krGradeInfo?.release_dates[0]?.certification;
   const movieCert = cert === undefined || cert === '' ? '19' : cert;
@@ -41,6 +43,7 @@ const PreviewModal = ({
     19: Rating19,
     ALL: RatingALL,
   };
+  const infoMenuIcons = [Play, Like, Plus];
 
   // const releaseDate = movieInfo?.release_date;
 
@@ -73,10 +76,24 @@ const PreviewModal = ({
         alt="thumbnail"
       />
       <div className="preview-movie-info">
+        <div className="movie-info-top">
+          <div className="info-left">
+            {infoMenuIcons.map((item, idx) => (
+              <button key={idx}>
+                <img src={item} alt="" />
+              </button>
+            ))}
+          </div>
+          <div className="open-info">
+            <button>
+              <img src={OpenIcon} alt="상세정보열기" />
+            </button>
+          </div>
+        </div>
         <div className="movie-info">
           <img src={ratingIcons[movieCert]} alt="등급" height="32px" />
           <p className="movie-runtime">
-            {kind === 'movie' ? { runtimeKR } : tvDetailInfo}
+            {kind === 'movie' ? runtimeKR : tvDetailInfo}
           </p>
         </div>
         <h4 className="movie-title">
