@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './PreviewModal.style.css';
 import { useMoviesDetailQuery } from '../../hooks/movie/useMovieDetail';
 import { useMoviesCertificationQuery } from '../../hooks/movie/useMovieCertification';
+import { useTVDetailQuery } from '../../hooks/tv/useTVDetail';
+import { motion } from 'framer-motion';
 import Rating12 from '../../assets/icon/rating12.svg';
 import Rating15 from '../../assets/icon/rating15.svg';
 import Rating19 from '../../assets/icon/rating19.svg';
@@ -11,7 +13,6 @@ import OpenIcon from '../../assets/icon/open.svg';
 import Play from '../../assets/icon/play.svg';
 import Like from '../../assets/icon/like.svg';
 import Plus from '../../assets/icon/plus.svg';
-import { useTVDetailQuery } from '../../hooks/tv/useTVDetail';
 
 const PreviewModal = ({
   movie,
@@ -19,13 +20,13 @@ const PreviewModal = ({
   onMouseEnter,
   onMouseLeave,
   kind,
+  setOpen,
 }) => {
   const { data: movieInfo } = useMoviesDetailQuery(movie?.id);
   const { data: tvInfo } = useTVDetailQuery(movie?.id, kind);
   const { data: movieGrade } = useMoviesCertificationQuery(movie?.id);
 
   const infoList = kind === 'movie' ? movieInfo : tvInfo;
-
   const orgRuntime = movieInfo?.runtime;
   const runHours = Math.floor(orgRuntime / 60);
   const runMinutes = orgRuntime % 60;
@@ -63,10 +64,16 @@ const PreviewModal = ({
     left: position.left,
   };
 
+  if (!infoList || !infoList.genres) return null;
+
   return createPortal(
-    <div
+    <motion.div
       className="preview-modal"
       style={style}
+      initial={{ scale: 1, opacity: 0 }}
+      animate={{ scale: 1.2, opacity: 1 }}
+      exit={{ scale: 1, opacity: 0 }}
+      transition={{ duration: 0.3 }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -85,7 +92,7 @@ const PreviewModal = ({
             ))}
           </div>
           <div className="open-info">
-            <button>
+            <button onClick={() => setOpen(true)}>
               <img src={OpenIcon} alt="상세정보열기" />
             </button>
           </div>
@@ -105,7 +112,7 @@ const PreviewModal = ({
           </span>
         ))}
       </div>
-    </div>,
+    </motion.div>,
     portal
   );
 };

@@ -4,8 +4,6 @@
   background: #181818;
   color: #fff;
   z-index: 9;
-  transition: all 0.5s ease;
-  transform: scale(1.1);
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -31,8 +29,12 @@
   background: none;
   outline: none;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.7);
   padding: 0.5rem;
+}
+.movie-info-top button:hover {
+  border-color: #fff;
+  background-color: rgba(42, 42, 42, 0.6);
 }
 .info-left {
   display: flex;
