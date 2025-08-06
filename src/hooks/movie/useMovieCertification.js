@@ -5,11 +5,11 @@ const fetchMovieCertification = movieId => {
   return api.get(`/movie/${movieId}/release_dates`);
 };
 
-export const useMoviesCertificationQuery = movieId => {
+export const useMoviesCertificationQuery = (movieId, kind) => {
   return useQuery({
     queryKey: ['movie-certification', movieId],
     queryFn: () => fetchMovieCertification(movieId),
-    enabled: !!movieId,
+    enabled: !!movieId && kind === 'movie',
     select: result => result.data.results,
   });
 };

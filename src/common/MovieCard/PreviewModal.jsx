@@ -22,9 +22,9 @@ const PreviewModal = ({
   kind,
   setOpen,
 }) => {
-  const { data: movieInfo } = useMoviesDetailQuery(movie?.id);
+  const { data: movieInfo } = useMoviesDetailQuery(movie?.id, kind);
   const { data: tvInfo } = useTVDetailQuery(movie?.id, kind);
-  const { data: movieGrade } = useMoviesCertificationQuery(movie?.id);
+  const { data: movieGrade } = useMoviesCertificationQuery(movie?.id, kind);
 
   const infoList = kind === 'movie' ? movieInfo : tvInfo;
   const orgRuntime = movieInfo?.runtime;
@@ -64,7 +64,7 @@ const PreviewModal = ({
     left: position.left,
   };
 
-  if (!infoList || !infoList.genres) return null;
+  if (!infoList || !infoList.genres || !movie?.backdrop_path) return null;
 
   return createPortal(
     <motion.div
