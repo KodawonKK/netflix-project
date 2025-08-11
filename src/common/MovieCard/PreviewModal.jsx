@@ -98,7 +98,12 @@ const PreviewModal = ({
           </div>
         </div>
         <div className="movie-info">
-          <img src={ratingIcons[movieCert]} alt="등급" height="32px" />
+          {kind === 'movie' ? (
+            <img src={ratingIcons[movieCert]} alt="등급" height="32px" />
+          ) : (
+            <div className="tv-grade">15+</div>
+          )}
+
           <p className="movie-runtime">
             {kind === 'movie' ? runtimeKR : tvDetailInfo}
           </p>

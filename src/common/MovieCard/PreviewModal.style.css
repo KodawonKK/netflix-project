@@ -52,6 +52,13 @@
 .movie-info {
   display: flex;
   gap: 10px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.tv-grade {
+  border: 1px solid hsla(0, 0%, 100%, 0.4);
+  padding: 0 0.4em;
+  font-size: 15px;
 }
 .open-info {
   display: flex;
@@ -62,7 +69,7 @@
   border-radius: 50%;
 } */
 .movie-runtime {
-  line-height: 32px;
+  margin-bottom: 0 !important;
 }
 .movie-title {
   font-size: 16px !important;
