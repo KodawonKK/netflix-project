@@ -60,13 +60,13 @@ const PreviewModal = ({
   if (!portal || !movie) return null;
 
   const style = {
-    top: position.top,
+    top: 0,
     left: position.left,
   };
 
   if (!infoList || !infoList.genres || !movie?.backdrop_path) return null;
 
-  return createPortal(
+  return (
     <motion.div
       className="preview-modal"
       style={style}
@@ -112,8 +112,7 @@ const PreviewModal = ({
           </span>
         ))}
       </div>
-    </motion.div>,
-    portal
+    </motion.div>
   );
 };
 

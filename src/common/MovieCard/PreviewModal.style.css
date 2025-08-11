@@ -1,5 +1,5 @@
 .preview-modal {
-  position: fixed;
+  position: absolute;
   width: 300px;
   background: #181818;
   color: #fff;
