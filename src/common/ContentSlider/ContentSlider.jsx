@@ -45,19 +45,6 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
     el: '.custom-pagination',
   };
 
-  // const handleHover = (movie, ref) => {
-  //   if (!movie || !ref?.current) {
-  //     setHoverCardInfo(null);
-  //     return;
-  //   }
-  //   const rect = ref?.current.getBoundingClientRect();
-  //   setHoverCardInfo(movie);
-  //   setModalPos({
-  //     top: rect.top,
-  //     left: rect.left + 10,
-  //   });
-  // };
-
   const handleHover = (movie, ref) => {
     clearTimeout(hoverTimeout.current);
 
@@ -66,14 +53,17 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
       return;
     }
 
-    hoverTimeout.current = setTimeout(() => {
-      const rect = ref.current.getBoundingClientRect();
-      setHoverCardInfo(movie);
-      setModalPos({
-        top: rect.top,
-        left: rect.left + 20,
-      });
-    }, 500);
+    const rect = ref.current.getBoundingClientRect();
+    setHoverCardInfo(movie);
+    setModalPos({
+      top: rect.top,
+      left: rect.left + 20,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(hoverTimeout.current);
+    setHoverCardInfo(null);
   };
 
   return (
@@ -100,22 +90,22 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
           loop={data?.results.length > 7}
           breakpoints={{
             280: {
-              slidesPerView: 2.5,
+              slidesPerView: 2.1,
             },
             500: {
-              slidesPerView: 2.5,
+              slidesPerView: 2.1,
             },
             800: {
-              slidesPerView: 3.5,
+              slidesPerView: 3.15,
             },
             1100: {
-              slidesPerView: 4.5,
+              slidesPerView: 4.15,
             },
             1400: {
-              slidesPerView: 5.5,
+              slidesPerView: 5.15,
             },
             2400: {
-              slidesPerView: 6.5,
+              slidesPerView: 6.15,
             },
           }}
           className="mySwiper"
@@ -153,14 +143,16 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
             <img src={Arrow} alt="오른쪽화살표" />
           </button>
         </span>
-        <PreviewModal
-          movie={hoverCardInfo}
-          position={modalPos}
-          setOpen={setOpen}
-          onMouseEnter={() => setHoverCardInfo(hoverCardInfo)}
-          onMouseLeave={() => setHoverCardInfo(null)}
-          kind={kind === 'movie' ? 'movie' : 'tv'}
-        />
+        {hoverCardInfo && (
+          <PreviewModal
+            movie={hoverCardInfo}
+            position={modalPos}
+            setOpen={setOpen}
+            onMouseEnter={() => setHoverCardInfo(hoverCardInfo)}
+            onMouseLeave={handleMouseLeave}
+            kind={kind === 'movie' ? 'movie' : 'tv'}
+          />
+        )}
       </div>
 
       {/* {isOpen && <PreviewDetailModal data={hoverCardInfo} setOpen={setOpen} />} */}
