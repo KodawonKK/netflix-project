@@ -155,7 +155,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
         )}
       </div>
 
-      {/* {isOpen && <PreviewDetailModal data={hoverCardInfo} setOpen={setOpen} />} */}
+      {isOpen && <PreviewDetailModal data={hoverCardInfo} setOpen={setOpen} />}
     </div>
   );
 };

@@ -1,5 +1,4 @@
-import React, { useMemo, useState } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useMemo } from 'react';
 import './PreviewModal.style.css';
 import { useMoviesDetailQuery } from '../../hooks/movie/useMovieDetail';
 import { useMoviesCertificationQuery } from '../../hooks/movie/useMovieCertification';
