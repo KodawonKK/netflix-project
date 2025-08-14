@@ -13,6 +13,7 @@ import OpenIcon from '../../assets/icon/open.svg';
 import Play from '../../assets/icon/play.svg';
 import Like from '../../assets/icon/like.svg';
 import Plus from '../../assets/icon/plus.svg';
+import { useMapGenres } from '../../hooks/useMapGenres';
 
 const PreviewModal = ({
   contentInfo,
@@ -49,13 +50,7 @@ const PreviewModal = ({
 
   // const releaseDate = movieInfo?.release_date;
 
-  const genreMap = useMemo(() => {
-    const map = {};
-    infoList?.genres?.forEach(genre => {
-      map[genre.id] = genre.name;
-    });
-    return map;
-  }, [infoList?.genres]);
+  const genreMap = useMapGenres(infoList?.genres);
 
   const portal = document.getElementById('portal-root');
   if (!portal || !contentInfo) return null;
