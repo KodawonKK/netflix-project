@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import './PreviewModal.style.css';
 import { useMoviesDetailQuery } from '../../hooks/movie/useMovieDetail';
 import { useMoviesCertificationQuery } from '../../hooks/movie/useMovieCertification';
 import { useTVDetailQuery } from '../../hooks/tv/useTVDetail';
 import { motion } from 'framer-motion';
+import { formatRuntime } from '../../utils/formatRuntime';
 import Rating12 from '../../assets/icon/rating12.svg';
 import Rating15 from '../../assets/icon/rating15.svg';
 import Rating19 from '../../assets/icon/rating19.svg';
@@ -14,22 +15,23 @@ import Like from '../../assets/icon/like.svg';
 import Plus from '../../assets/icon/plus.svg';
 
 const PreviewModal = ({
-  movie,
+  contentInfo,
   position,
   onMouseEnter,
   onMouseLeave,
   kind,
   setOpen,
+  setSelectedInfo,
 }) => {
-  const { data: movieInfo } = useMoviesDetailQuery(movie?.id, kind);
-  const { data: tvInfo } = useTVDetailQuery(movie?.id, kind);
-  const { data: movieGrade } = useMoviesCertificationQuery(movie?.id, kind);
+  const { data: movieInfo } = useMoviesDetailQuery(contentInfo?.id, kind);
+  const { data: tvInfo } = useTVDetailQuery(contentInfo?.id, kind);
+  const { data: movieGrade } = useMoviesCertificationQuery(
+    contentInfo?.id,
+    kind
+  );
 
   const infoList = kind === 'movie' ? movieInfo : tvInfo;
-  const orgRuntime = movieInfo?.runtime;
-  const runHours = Math.floor(orgRuntime / 60);
-  const runMinutes = orgRuntime % 60;
-  const runtimeKR = `${runHours}시간 ${runMinutes}분`;
+  const runtimeKR = formatRuntime(movieInfo?.runtime);
   const episode = `에피소드 ${tvInfo?.number_of_episodes}개`;
   const season = tvInfo?.number_of_seasons;
   const tvDetailInfo = season >= 2 ? `시즌 ${season}개` : episode;
@@ -56,14 +58,14 @@ const PreviewModal = ({
   }, [infoList?.genres]);
 
   const portal = document.getElementById('portal-root');
-  if (!portal || !movie) return null;
+  if (!portal || !contentInfo) return null;
 
   const style = {
     top: 0,
     left: position.left,
   };
 
-  if (!infoList || !infoList.genres || !movie?.backdrop_path) return null;
+  if (!infoList || !infoList.genres || !contentInfo?.backdrop_path) return null;
 
   return (
     <motion.div
@@ -77,7 +79,7 @@ const PreviewModal = ({
       onMouseLeave={onMouseLeave}
     >
       <img
-        src={`https://media.themoviedb.org/t/p/w355_and_h200_multi_faces${movie?.backdrop_path}`}
+        src={`https://media.themoviedb.org/t/p/w355_and_h200_multi_faces${contentInfo?.backdrop_path}`}
         width="100%"
         alt="thumbnail"
       />
@@ -91,7 +93,12 @@ const PreviewModal = ({
             ))}
           </div>
           <div className="open-info">
-            <button onClick={() => setOpen(true)}>
+            <button
+              onClick={() => {
+                setOpen(true);
+                setSelectedInfo(infoList);
+              }}
+            >
               <img src={OpenIcon} alt="상세정보열기" />
             </button>
           </div>
@@ -108,9 +115,9 @@ const PreviewModal = ({
           </p>
         </div>
         <h4 className="movie-title">
-          {kind === 'movie' ? movie?.title : movie?.name}
+          {kind === 'movie' ? contentInfo?.title : contentInfo?.name}
         </h4>
-        {movie?.genre_ids.map((genre, idx) => (
+        {contentInfo?.genre_ids.map((genre, idx) => (
           <span className={`movie-genre ${idx === 0 && 'no-bullet'}`} key={idx}>
             {genreMap[genre]}
           </span>
