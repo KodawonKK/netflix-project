@@ -27,6 +27,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
   const hoverTimeout = useRef(null);
   const [hoverCardInfo, setHoverCardInfo] = useState(null);
   const [modalPos, setModalPos] = useState({ top: 0, left: 0 });
+  const [selectedInfo, setSelectedInfo] = useState(null);
   const [isOpen, setOpen] = useState(false);
   const rankImg = {
     1: rank1,
@@ -143,19 +144,25 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
             <img src={Arrow} alt="오른쪽화살표" />
           </button>
         </span>
-        {hoverCardInfo && (
-          <PreviewModal
-            movie={hoverCardInfo}
-            position={modalPos}
-            setOpen={setOpen}
-            onMouseEnter={() => setHoverCardInfo(hoverCardInfo)}
-            onMouseLeave={handleMouseLeave}
-            kind={kind === 'movie' ? 'movie' : 'tv'}
-          />
-        )}
+        <PreviewModal
+          contentInfo={hoverCardInfo}
+          position={modalPos}
+          setOpen={setOpen}
+          setSelectedInfo={setSelectedInfo}
+          onMouseEnter={() => setHoverCardInfo(hoverCardInfo)}
+          onMouseLeave={handleMouseLeave}
+          kind={kind === 'movie' ? 'movie' : 'tv'}
+        />
       </div>
 
-      {isOpen && <PreviewDetailModal data={hoverCardInfo} setOpen={setOpen} />}
+      {isOpen && (
+        <PreviewDetailModal
+          selectedInfo={selectedInfo}
+          setOpen={setOpen}
+          isOpen={isOpen}
+          // kind={kind === 'movie' ? 'movie' : 'tv'}
+        />
+      )}
     </div>
   );
 };

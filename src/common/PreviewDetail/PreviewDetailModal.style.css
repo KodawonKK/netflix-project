@@ -6,26 +6,22 @@
   top: 0;
   width: 100%;
   z-index: 9999;
+  overflow-y: auto;
 }
 .preview-detail {
-  position: absolute;
-  left: 50%;
-  top: 60%;
+  position: relative;
   width: 70%;
-  height: 100%;
-  transform: translate(-50%, -50%);
   box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
   padding-bottom: 2em;
-  background: linear-gradient(0deg, #181818, transparent 50%);
   background: #181818;
-  overflow: scroll;
+  margin: 60px auto;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  overflow: hidden;
 }
 .preview-detail-top {
   position: relative;
   background: linear-gradient(0deg, #181818, transparent 50%);
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  overflow: hidden;
 }
 .preview-detail-overlay {
   position: absolute;
@@ -46,6 +42,7 @@
 .preview-detail-btm {
   color: #fff;
   padding: 1em 2.5em 3em;
+  background: #181818;
 }
 .preview-detail-first {
   display: grid;
@@ -67,6 +64,10 @@
   grid-gap: 1em;
   grid-template-columns: repeat(3, 1fr);
   cursor: pointer;
+}
+.preview-contents-card {
+  border-radius: 6px;
+  overflow: hidden;
 }
 .preview-contents-title {
   padding-top: 10px;

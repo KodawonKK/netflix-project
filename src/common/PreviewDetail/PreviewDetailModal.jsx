@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './PreviewDetailModal.style.css';
 import CloseIcon from '../../assets/icon/close.svg';
 import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
@@ -6,7 +6,7 @@ import { useMoviesDetailFullQuery } from '../../hooks/movie/useMovieDetailFull';
 import { formatRuntime } from '../../utils/formatRuntime';
 import { useMapGenres } from '../../hooks/useMapGenres';
 
-const PreviewDetailModal = ({ setOpen, kind, selectedInfo }) => {
+const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   const imgUrl = `https://image.tmdb.org/t/p/original${selectedInfo?.backdrop_path}`;
   const info = useMoviesDetailFullQuery(selectedInfo?.id, 'movie');
   const release = selectedInfo.release_date.split('-')[0];
@@ -17,8 +17,21 @@ const PreviewDetailModal = ({ setOpen, kind, selectedInfo }) => {
   const director = info?.data?.credits ? info.data.credits.crew : [];
   const title = selectedInfo?.title;
   const recommend = info?.data?.recommendations?.results ?? [];
-  const video = useMovieVideoQuery(selectedInfo?.id, 'movie')?.data[0];
-  console.log(video);
+  // const video = useMovieVideoQuery(selectedInfo?.id, 'movie')?.data[0] ;
+
+  useEffect(() => {
+    if (isOpen) {
+      // 모달 열릴 때
+      document.body.style.overflow = 'hidden';
+    } else {
+      // 모달 닫힐 때
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   return (
     <div className="preview-detail-wrap">
       <div className="preview-detail">
