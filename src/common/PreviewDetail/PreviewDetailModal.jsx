@@ -18,6 +18,11 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   const title = selectedInfo?.title;
   const recommend = info?.data?.recommendations?.results ?? [];
   // const video = useMovieVideoQuery(selectedInfo?.id, 'movie')?.data[0] ;
+  const handleOverlayClick = e => {
+    if (e.target === e.currentTarget) {
+      setOpen(false);
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -33,7 +38,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   }, [isOpen]);
 
   return (
-    <div className="preview-detail-wrap">
+    <div className="preview-detail-wrap" onClick={handleOverlayClick}>
       <div className="preview-detail">
         <div className="preview-detail-top">
           <div className="preview-detail-overlay"></div>
