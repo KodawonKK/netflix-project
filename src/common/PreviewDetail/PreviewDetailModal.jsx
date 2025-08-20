@@ -5,6 +5,7 @@ import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
 import { useMoviesDetailFullQuery } from '../../hooks/movie/useMovieDetailFull';
 import { formatRuntime } from '../../utils/formatRuntime';
 import { useMapGenres } from '../../hooks/useMapGenres';
+import OpenIcon from '../../assets/icon/open.svg';
 
 const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   const imgUrl = `https://image.tmdb.org/t/p/original${selectedInfo?.backdrop_path}`;
@@ -17,10 +18,22 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   const director = info?.data?.credits ? info.data.credits.crew : [];
   const title = selectedInfo?.title;
   const recommend = info?.data?.recommendations?.results ?? [];
-  // const video = useMovieVideoQuery(selectedInfo?.id, 'movie')?.data[0] ;
+  const video = useMovieVideoQuery(selectedInfo?.id, 'movie');
+  const [visibleCount, setVisibleCount] = useState(9);
+  const [isClick, setClick] = useState(false);
+
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
       setOpen(false);
+    }
+  };
+
+  const moreBtnClick = () => {
+    setClick(prev => !prev);
+    if (visibleCount <= recommend.length) {
+      setVisibleCount(prev => prev + recommend.length - 1);
+    } else {
+      setVisibleCount(9);
     }
   };
 
@@ -64,7 +77,6 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
                     {idx !== 4 && ', '}
                   </span>
                 ))}
-                {/* <button>더보기</button> */}
               </div>
               <div>
                 <span className="preview-info-title">장르:</span>
@@ -81,7 +93,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
           <div className="preview-similar-wrap">
             <h3 className="preview-contents-title">추천 콘텐츠</h3>
             <div className="preview-contents-wrap">
-              {recommend.map(
+              {recommend.slice(0, visibleCount).map(
                 (item, idx) =>
                   item.backdrop_path && (
                     <div className="preview-contents-card" key={idx}>
@@ -97,6 +109,14 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
                     </div>
                   )
               )}
+            </div>
+          </div>
+          <div
+            className={`more-btn-wrap ${isClick ? 'open' : ''}`}
+            onClick={moreBtnClick}
+          >
+            <div className="more-btn">
+              <img src={OpenIcon} alt="더보기" width={'100%'} />
             </div>
           </div>
           <div className="preview-detail-info"></div>

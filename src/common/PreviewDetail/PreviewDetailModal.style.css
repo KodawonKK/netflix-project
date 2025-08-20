@@ -65,6 +65,39 @@
   grid-template-columns: repeat(3, 1fr);
   cursor: pointer;
 }
+.more-btn-wrap {
+  border-bottom: 3px solid #404040;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  margin-top: -6em;
+  height: 6em;
+  background-image: linear-gradient(
+    0deg,
+    #181818 0,
+    hsla(0, 0%, 9%, 0.7) 20%,
+    hsla(0, 0%, 9%, 0.4) 30%,
+    transparent 50%
+  );
+}
+.more-btn-wrap.open {
+  transform: rotateZ(180deg);
+  margin-top: 6em;
+}
+.more-btn {
+  border-radius: 50%;
+  border: 3px solid hsla(0, 0%, 100%, 0.5);
+  width: 39px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(50%);
+}
+.more-btn img {
+  padding: 0.5em;
+}
 .preview-contents-card {
   border-radius: 6px;
   overflow: hidden;
