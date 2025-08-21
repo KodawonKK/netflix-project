@@ -1,12 +1,11 @@
 import React from 'react';
-import { usePopularMoviesQuery } from '../../../../hooks/movie/usePopularMovies';
 import './Banner.style.css';
 import Button from 'react-bootstrap/Button';
 import InfoIcon from '../../../../assets/icon/info.svg';
-import Play from '../../../../assets/icon/play.svg';
 import { Alert } from 'bootstrap';
+import PlayBtn from '../../../../common/Buttons/PlayBtn';
 
-const Banner = ({ data, kind }) => {
+const Banner = ({ data, kind, isLoading }) => {
   // const { data, isLoading, isError, error } = usePopularMoviesQuery();
   // if (isLoading) {
   //   <h1>...Loading</h1>;
@@ -28,10 +27,7 @@ const Banner = ({ data, kind }) => {
           {data?.results[0]?.overview}
         </p>
         <div className="banner-btn-wrap">
-          <Button variant="light" size="sm" className="banner-btn">
-            <img src={Play} alt="재생 버튼" />
-            <span>재생</span>
-          </Button>
+          <PlayBtn size="sm" name="banner-btn" />
           <Button variant="secondary" size="sm" className="banner-btn">
             <img src={InfoIcon} alt="상세 정보" />
             <span>상세 정보</span>

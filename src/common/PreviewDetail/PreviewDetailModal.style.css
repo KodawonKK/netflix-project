@@ -38,6 +38,17 @@
   background: #181818;
   border-radius: 50%;
   padding: 10px;
+  cursor: pointer;
+}
+.play-btn {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding-left: 2rem;
+  padding-right: 2.4rem;
+  display: flex;
+  margin: 0 0 0 2em;
+  gap: 8px;
 }
 .preview-detail-btm {
   color: #fff;

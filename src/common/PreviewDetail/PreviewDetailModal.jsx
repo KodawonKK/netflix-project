@@ -1,13 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import './PreviewDetailModal.style.css';
 import CloseIcon from '../../assets/icon/close.svg';
-import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
+// import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
 import { useMoviesDetailFullQuery } from '../../hooks/movie/useMovieDetailFull';
 import { formatRuntime } from '../../utils/formatRuntime';
 import { useMapGenres } from '../../hooks/useMapGenres';
 import OpenIcon from '../../assets/icon/open.svg';
+import PlayBtn from '../Buttons/PlayBtn';
 
 const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
+  const [visibleCount, setVisibleCount] = useState(9);
+  const [isClick, setClick] = useState(false);
+
   const imgUrl = `https://image.tmdb.org/t/p/original${selectedInfo?.backdrop_path}`;
   const info = useMoviesDetailFullQuery(selectedInfo?.id, 'movie');
   const release = selectedInfo.release_date.split('-')[0];
@@ -15,12 +19,9 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   const overView = selectedInfo?.overview;
   const genreMap = Object.values(useMapGenres(selectedInfo?.genres)) || {};
   const cast = info?.data?.credits ? info.data.credits.cast : [];
-  const director = info?.data?.credits ? info.data.credits.crew : [];
-  const title = selectedInfo?.title;
+  // const director = info?.data?.credits ? info.data.credits.crew : [];
+  // const title = selectedInfo?.title;
   const recommend = info?.data?.recommendations?.results ?? [];
-  const video = useMovieVideoQuery(selectedInfo?.id, 'movie');
-  const [visibleCount, setVisibleCount] = useState(9);
-  const [isClick, setClick] = useState(false);
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
@@ -42,7 +43,6 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
       // 모달 열릴 때
       document.body.style.overflow = 'hidden';
     } else {
-      // 모달 닫힐 때
       document.body.style.overflow = 'auto';
     }
     return () => {
@@ -59,6 +59,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
             <img src={CloseIcon} alt="닫기" />
           </span>
           <img src={imgUrl} alt="" width="100%" />
+          <PlayBtn size="lg" name="play-btn" />
         </div>
         <div className="preview-detail-btm">
           <div className="preview-detail-first">
