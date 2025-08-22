@@ -40,19 +40,24 @@
   padding: 10px;
   cursor: pointer;
 }
-.play-btn {
+.preview-btn-wrap {
+  margin: 0 0 0 2em;
   position: absolute;
   left: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.play-btn {
   padding-left: 2rem;
   padding-right: 2.4rem;
   display: flex;
-  margin: 0 0 0 2em;
   gap: 8px;
 }
 .preview-detail-btm {
   color: #fff;
-  padding: 1em 2.5em 3em;
+  padding: 2em 2.5em 3em;
   background: #181818;
 }
 .preview-detail-first {
@@ -123,6 +128,11 @@
   padding: 1em;
   min-height: 50%;
 }
+.preview-contents-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
 .preview-contents-info p {
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -130,6 +140,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 0px;
+  padding-top: 10px;
 }
 .preview-contents-info h3 {
   font-size: 16px;

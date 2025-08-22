@@ -7,6 +7,8 @@ import { formatRuntime } from '../../utils/formatRuntime';
 import { useMapGenres } from '../../hooks/useMapGenres';
 import OpenIcon from '../../assets/icon/open.svg';
 import PlayBtn from '../Buttons/PlayBtn';
+import AddBtn from '../Buttons/AddBtn';
+import LikeBtn from '../Buttons/LikeBtn';
 
 const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   const [visibleCount, setVisibleCount] = useState(9);
@@ -59,7 +61,11 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
             <img src={CloseIcon} alt="닫기" />
           </span>
           <img src={imgUrl} alt="" width="100%" />
-          <PlayBtn size="lg" name="play-btn" />
+          <div className="preview-btn-wrap">
+            <PlayBtn size="lg" name="play-btn" />
+            <AddBtn />
+            <LikeBtn />
+          </div>
         </div>
         <div className="preview-detail-btm">
           <div className="preview-detail-first">
@@ -104,7 +110,10 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
                         width={'100%'}
                       />
                       <div className="preview-contents-info">
-                        <h3>{item?.title}</h3>
+                        <div className="preview-contents-top">
+                          <h3>{item?.title}</h3>
+                          <AddBtn />
+                        </div>
                         <p>{item?.overview}</p>
                       </div>
                     </div>

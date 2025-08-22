@@ -1,0 +1,26 @@
+.commonDetail {
+  background: none;
+  outline: none;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  padding: 0.5rem;
+}
+.commonDetail:hover {
+  border-color: #fff;
+  border-width: 3px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.commonModal {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.likeBtnWrap {
+  padding: 0.25rem;
+}
+.likeBtn {
+  /* transform: scale(3); */
+  width: 32px;
+  height: 34px;
+  transform: scale(2);
+}
