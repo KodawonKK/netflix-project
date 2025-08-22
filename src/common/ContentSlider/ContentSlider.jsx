@@ -160,7 +160,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
           selectedInfo={selectedInfo}
           setOpen={setOpen}
           isOpen={isOpen}
-          // kind={kind === 'movie' ? 'movie' : 'tv'}
+          kind={kind === 'movie' ? 'movie' : 'tv'}
         />
       )}
     </div>

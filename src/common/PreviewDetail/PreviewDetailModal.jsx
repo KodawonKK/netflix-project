@@ -9,21 +9,28 @@ import OpenIcon from '../../assets/icon/open.svg';
 import PlayBtn from '../Buttons/PlayBtn';
 import AddBtn from '../Buttons/AddBtn';
 import LikeBtn from '../Buttons/LikeBtn';
+import { useTVDetailFullQuery } from '../../hooks/tv/useTVDetailFull';
+import { mapInfo } from '../../utils/mapInfo';
 
 const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
   const [visibleCount, setVisibleCount] = useState(9);
   const [isClick, setClick] = useState(false);
+  const { data: tvFullInfo } = useTVDetailFullQuery(selectedInfo?.id, 'tv');
+  const { data: movieFullInfo } = useMoviesDetailFullQuery(
+    selectedInfo?.id,
+    'movie'
+  );
+  const fullInfo = kind === 'movie' ? movieFullInfo : tvFullInfo;
+  const { imgUrl, release, runtimeKR, overView, cast, recommend } = mapInfo(
+    kind,
+    selectedInfo,
+    fullInfo
+  );
 
-  const imgUrl = `https://image.tmdb.org/t/p/original${selectedInfo?.backdrop_path}`;
-  const info = useMoviesDetailFullQuery(selectedInfo?.id, 'movie');
-  const release = selectedInfo.release_date.split('-')[0];
-  const runtimeKR = formatRuntime(selectedInfo?.runtime);
-  const overView = selectedInfo?.overview;
   const genreMap = Object.values(useMapGenres(selectedInfo?.genres)) || {};
-  const cast = info?.data?.credits ? info.data.credits.cast : [];
+
   // const director = info?.data?.credits ? info.data.credits.crew : [];
-  // const title = selectedInfo?.title;
-  const recommend = info?.data?.recommendations?.results ?? [];
+  // const simillar = info?.simmi
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
@@ -111,7 +118,31 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
                       />
                       <div className="preview-contents-info">
                         <div className="preview-contents-top">
-                          <h3>{item?.title}</h3>
+                          <h3>{kind === 'movie' ? item?.title : item?.name}</h3>
+                          <AddBtn />
+                        </div>
+                        <p>{item?.overview}</p>
+                      </div>
+                    </div>
+                  )
+              )}
+            </div>
+          </div>
+          <div className="preview-similar-wrap">
+            <h3 className="preview-contents-title">비슷한 콘텐츠</h3>
+            <div className="preview-contents-wrap">
+              {recommend.slice(0, visibleCount).map(
+                (item, idx) =>
+                  item.backdrop_path && (
+                    <div className="preview-contents-card" key={idx}>
+                      <img
+                        src={`https://image.tmdb.org/t/p/original/${item?.backdrop_path}`}
+                        alt="이미지"
+                        width={'100%'}
+                      />
+                      <div className="preview-contents-info">
+                        <div className="preview-contents-top">
+                          <h3>{kind === 'movie' ? item?.title : item?.name}</h3>
                           <AddBtn />
                         </div>
                         <p>{item?.overview}</p>

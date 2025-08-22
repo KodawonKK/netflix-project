@@ -9,7 +9,7 @@ const fetchMovieDetailFullInfo = movieId => {
 
 export const useMoviesDetailFullQuery = (movieId, kind) => {
   return useQuery({
-    queryKey: ['movie-detail', movieId],
+    queryKey: ['movie-detail-full', movieId],
     queryFn: () => fetchMovieDetailFullInfo(movieId),
     enabled: !!movieId && kind === 'movie',
     select: result => result.data,
