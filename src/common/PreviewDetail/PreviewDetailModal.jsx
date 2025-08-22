@@ -12,25 +12,20 @@ import LikeBtn from '../Buttons/LikeBtn';
 import { useTVDetailFullQuery } from '../../hooks/tv/useTVDetailFull';
 import { mapInfo } from '../../utils/mapInfo';
 
-const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
+const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
   const [visibleCount, setVisibleCount] = useState(9);
   const [isClick, setClick] = useState(false);
-  const { data: tvFullInfo } = useTVDetailFullQuery(selectedInfo?.id, 'tv');
+  const { data: tvFullInfo } = useTVDetailFullQuery(selectedInfoId, kind);
   const { data: movieFullInfo } = useMoviesDetailFullQuery(
-    selectedInfo?.id,
-    'movie'
+    selectedInfoId,
+    kind
   );
   const fullInfo = kind === 'movie' ? movieFullInfo : tvFullInfo;
   const { imgUrl, release, runtimeKR, overView, cast, recommend } = mapInfo(
     kind,
-    selectedInfo,
     fullInfo
   );
-
-  const genreMap = Object.values(useMapGenres(selectedInfo?.genres)) || {};
-
-  // const director = info?.data?.credits ? info.data.credits.crew : [];
-  // const simillar = info?.simmi
+  const genreMap = Object.values(useMapGenres(fullInfo?.genres)) || {};
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
@@ -128,7 +123,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
               )}
             </div>
           </div>
-          <div className="preview-similar-wrap">
+          {/* <div className="preview-similar-wrap">
             <h3 className="preview-contents-title">비슷한 콘텐츠</h3>
             <div className="preview-contents-wrap">
               {recommend.slice(0, visibleCount).map(
@@ -151,7 +146,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfo }) => {
                   )
               )}
             </div>
-          </div>
+          </div> */}
           <div
             className={`more-btn-wrap ${isClick ? 'open' : ''}`}
             onClick={moreBtnClick}

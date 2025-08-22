@@ -157,7 +157,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
 
       {isOpen && (
         <PreviewDetailModal
-          selectedInfo={selectedInfo}
+          selectedInfoId={selectedInfo.id}
           setOpen={setOpen}
           isOpen={isOpen}
           kind={kind === 'movie' ? 'movie' : 'tv'}
