@@ -21,10 +21,8 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
     kind
   );
   const fullInfo = kind === 'movie' ? movieFullInfo : tvFullInfo;
-  const { imgUrl, release, runtimeKR, overView, cast, recommend } = mapInfo(
-    kind,
-    fullInfo
-  );
+  const { imgUrl, release, runtimeKR, overView, cast, recommend, title } =
+    mapInfo(kind, fullInfo);
   const genreMap = Object.values(useMapGenres(fullInfo?.genres)) || {};
 
   const handleOverlayClick = e => {
@@ -44,7 +42,6 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
 
   useEffect(() => {
     if (isOpen) {
-      // 모달 열릴 때
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -63,10 +60,13 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
             <img src={CloseIcon} alt="닫기" />
           </span>
           <img src={imgUrl} alt="" width="100%" />
-          <div className="preview-btn-wrap">
-            <PlayBtn size="lg" name="play-btn" />
-            <AddBtn />
-            <LikeBtn />
+          <div className="preview-title-wrap">
+            <h3>{title}</h3>
+            <div className="preview-btn-wrap">
+              <PlayBtn size="lg" name="play-btn" />
+              <AddBtn />
+              <LikeBtn />
+            </div>
           </div>
         </div>
         <div className="preview-detail-btm">

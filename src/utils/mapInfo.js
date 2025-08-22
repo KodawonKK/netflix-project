@@ -17,5 +17,6 @@ export const mapInfo = (kind, fullInfo) => {
     overView: fullInfo?.overview,
     cast: fullInfo?.credits ? fullInfo?.credits.cast : [],
     recommend: fullInfo?.recommendations?.results ?? [],
+    title: kind === 'movie' ? fullInfo?.title : fullInfo?.name,
   };
 };
