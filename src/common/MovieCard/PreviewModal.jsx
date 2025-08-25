@@ -14,6 +14,7 @@ import Play from '../../assets/icon/play.svg';
 import Like from '../../assets/icon/like.svg';
 import Plus from '../../assets/icon/plus.svg';
 import { useMapGenres } from '../../hooks/useMapGenres';
+import LikeBtn from '../Buttons/LikeBtn';
 
 const PreviewModal = ({
   contentInfo,
@@ -81,11 +82,15 @@ const PreviewModal = ({
       <div className="preview-movie-info">
         <div className="movie-info-top">
           <div className="info-left">
-            {infoMenuIcons.map((item, idx) => (
-              <button key={idx}>
-                <img src={item} alt="" />
-              </button>
-            ))}
+            {infoMenuIcons.map((item, idx) =>
+              idx !== 1 ? (
+                <button key={idx}>
+                  <img src={item} alt="" />
+                </button>
+              ) : (
+                <LikeBtn />
+              )
+            )}
           </div>
           <div className="open-info">
             <button

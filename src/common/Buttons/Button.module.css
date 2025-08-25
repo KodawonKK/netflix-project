@@ -7,7 +7,7 @@
 }
 .commonDetail:hover {
   border-color: #fff;
-  border-width: 3px;
+  /* border-width: 3px; */
   background-color: rgba(255, 255, 255, 0.1);
 }
 .commonModal {
@@ -16,11 +16,32 @@
   bottom: 0;
 }
 .likeBtnWrap {
-  padding: 0.25rem;
+  padding: 0.25rem !important;
+  position: relative;
 }
 .likeBtn {
-  /* transform: scale(3); */
   width: 32px;
   height: 34px;
   transform: scale(2);
+}
+.likeBtnHoverWrap {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #232323;
+  border-radius: 3em;
+  padding: 0.8em;
+  box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 2px 0px,
+    rgba(0, 0, 0, 0.5) 0px 8px 16px 0px;
+  transition: opacity 0.1s linear, transform 0.3s cubic-bezier(0.5, 0, 0.1, 1),
+    0.2s linear;
+  gap: 5px;
+}
+.likeBtnWrap:hover .likeBtnHoverWrap .likeBtnHover:hover {
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 50%;
+}
+.notGood {
+  transform: translateY(2px) rotateZ(180deg);
 }
