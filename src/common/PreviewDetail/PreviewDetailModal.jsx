@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import './PreviewDetailModal.style.css';
 import CloseIcon from '../../assets/icon/close.svg';
-// import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
+import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
 import { useMoviesDetailFullQuery } from '../../hooks/movie/useMovieDetailFull';
 import { useMapGenres } from '../../hooks/useMapGenres';
 import OpenIcon from '../../assets/icon/open.svg';
@@ -10,6 +10,8 @@ import AddBtn from '../Buttons/AddBtn';
 import LikeBtn from '../Buttons/LikeBtn';
 import { useTVDetailFullQuery } from '../../hooks/tv/useTVDetailFull';
 import { mapInfo } from '../../utils/mapInfo';
+import PlayModal from '../PlayModal/PlayModal';
+import { usePlayModalStore } from '../../stores/playModalStore';
 
 const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
   const [visibleCount, setVisibleCount] = useState(9);
@@ -20,9 +22,12 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
     kind
   );
   const fullInfo = kind === 'movie' ? movieFullInfo : tvFullInfo;
+  const video = useMovieVideoQuery(selectedInfoId, kind);
+  const findKey = video?.data?.find(item => item.type === 'Trailer');
   const { imgUrl, release, runtimeKR, overView, cast, recommend, title } =
     mapInfo(kind, fullInfo);
   const genreMap = Object.values(useMapGenres(fullInfo?.genres)) || {};
+  const { isPlayOpen, openModal, closeModal } = usePlayModalStore();
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
@@ -62,7 +67,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
           <div className="preview-title-wrap">
             <h3>{title}</h3>
             <div className="preview-btn-wrap">
-              <PlayBtn size="lg" name="play-btn" />
+              <PlayBtn size="lg" name="play-btn" openModal={openModal} />
               <AddBtn />
               <LikeBtn />
             </div>
@@ -159,6 +164,9 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
           {/* <div className='preview-' */}
         </div>
       </div>
+      {isPlayOpen && (
+        <PlayModal youtubeKey={findKey.key} closeModal={closeModal} />
+      )}
     </div>
   );
 };
