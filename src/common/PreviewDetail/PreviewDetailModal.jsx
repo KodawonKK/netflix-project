@@ -3,7 +3,6 @@ import './PreviewDetailModal.style.css';
 import CloseIcon from '../../assets/icon/close.svg';
 // import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
 import { useMoviesDetailFullQuery } from '../../hooks/movie/useMovieDetailFull';
-import { formatRuntime } from '../../utils/formatRuntime';
 import { useMapGenres } from '../../hooks/useMapGenres';
 import OpenIcon from '../../assets/icon/open.svg';
 import PlayBtn from '../Buttons/PlayBtn';
@@ -59,7 +58,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
           <span className="close-icon" onClick={() => setOpen(false)}>
             <img src={CloseIcon} alt="닫기" />
           </span>
-          <img src={imgUrl} alt="" width="100%" />
+          <img src={imgUrl} alt="" width="100%" loading="lazy" />
           <div className="preview-title-wrap">
             <h3>{title}</h3>
             <div className="preview-btn-wrap">
@@ -110,6 +109,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
                         src={`https://image.tmdb.org/t/p/original/${item?.backdrop_path}`}
                         alt="이미지"
                         width={'100%'}
+                        loading="lazy"
                       />
                       <div className="preview-contents-info">
                         <div className="preview-contents-top">

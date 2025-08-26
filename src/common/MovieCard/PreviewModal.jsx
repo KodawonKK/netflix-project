@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import './PreviewModal.style.css';
 import { useMoviesDetailQuery } from '../../hooks/movie/useMovieDetail';
 import { useMoviesCertificationQuery } from '../../hooks/movie/useMovieCertification';
+import { useTVCertificationQuery } from '../../hooks/tv/useTVCertification';
 import { useTVDetailQuery } from '../../hooks/tv/useTVDetail';
 import { motion } from 'framer-motion';
 import { formatRuntime } from '../../utils/formatRuntime';
@@ -15,6 +16,9 @@ import Like from '../../assets/icon/like.svg';
 import Plus from '../../assets/icon/plus.svg';
 import { useMapGenres } from '../../hooks/useMapGenres';
 import LikeBtn from '../Buttons/LikeBtn';
+import { mapInfo } from '../../utils/mapInfo';
+import { useTVDetailFullQuery } from '../../hooks/tv/useTVDetailFull';
+import { useMoviesDetailFullQuery } from '../../hooks/movie/useMovieDetailFull';
 
 const PreviewModal = ({
   contentInfo,
@@ -25,22 +29,23 @@ const PreviewModal = ({
   setOpen,
   setSelectedInfo,
 }) => {
-  const { data: movieInfo } = useMoviesDetailQuery(contentInfo?.id, kind);
-  const { data: tvInfo } = useTVDetailQuery(contentInfo?.id, kind);
   const { data: movieGrade } = useMoviesCertificationQuery(
     contentInfo?.id,
     kind
   );
-
-  const infoList = kind === 'movie' ? movieInfo : tvInfo;
-  const runtimeKR = formatRuntime(movieInfo?.runtime);
-  const episode = `에피소드 ${tvInfo?.number_of_episodes}개`;
-  const season = tvInfo?.number_of_seasons;
-  const tvDetailInfo = season >= 2 ? `시즌 ${season}개` : episode;
-  const krGradeInfo = movieGrade?.find(item => item.iso_3166_1 === 'KR');
-  const cert = krGradeInfo?.release_dates[0]?.certification;
-  const movieCert = cert === undefined || cert === '' ? '19' : cert;
-
+  const { data: tvGrade } = useTVCertificationQuery(contentInfo?.id, kind);
+  const { data: tvFullInfo } = useTVDetailFullQuery(contentInfo?.id, kind);
+  const { data: movieFullInfo } = useMoviesDetailFullQuery(
+    contentInfo?.id,
+    kind
+  );
+  const fullInfo = kind === 'movie' ? movieFullInfo : tvFullInfo;
+  const { runtimeKR, title, movieCert, tvCert } = mapInfo(
+    kind,
+    fullInfo,
+    movieGrade,
+    tvGrade
+  );
   const ratingIcons = {
     12: Rating12,
     15: Rating15,
@@ -48,20 +53,13 @@ const PreviewModal = ({
     ALL: RatingALL,
   };
   const infoMenuIcons = [Play, Like, Plus];
-
-  // const releaseDate = movieInfo?.release_date;
-
-  const genreMap = useMapGenres(infoList?.genres);
-
-  const portal = document.getElementById('portal-root');
-  if (!portal || !contentInfo) return null;
-
+  const genreMap = useMapGenres(fullInfo?.genres);
   const style = {
     top: 0,
     left: position.left,
   };
 
-  if (!infoList || !infoList.genres || !contentInfo?.backdrop_path) return null;
+  if (!fullInfo || !fullInfo.genres || !contentInfo?.backdrop_path) return null;
 
   return (
     <motion.div
@@ -78,6 +76,7 @@ const PreviewModal = ({
         src={`https://media.themoviedb.org/t/p/w355_and_h200_multi_faces${contentInfo?.backdrop_path}`}
         width="100%"
         alt="thumbnail"
+        loading="lazy"
       />
       <div className="preview-movie-info">
         <div className="movie-info-top">
@@ -96,7 +95,7 @@ const PreviewModal = ({
             <button
               onClick={() => {
                 setOpen(true);
-                setSelectedInfo(infoList);
+                setSelectedInfo(fullInfo);
               }}
             >
               <img src={OpenIcon} alt="상세정보열기" />
@@ -107,16 +106,12 @@ const PreviewModal = ({
           {kind === 'movie' ? (
             <img src={ratingIcons[movieCert]} alt="등급" height="32px" />
           ) : (
-            <div className="tv-grade">15+</div>
+            <div className="tv-grade">{`${tvCert}+`}</div>
           )}
 
-          <p className="movie-runtime">
-            {kind === 'movie' ? runtimeKR : tvDetailInfo}
-          </p>
+          <p className="movie-runtime">{runtimeKR}</p>
         </div>
-        <h4 className="movie-title">
-          {kind === 'movie' ? contentInfo?.title : contentInfo?.name}
-        </h4>
+        <h4 className="movie-title">{title}</h4>
         {contentInfo?.genre_ids.map((genre, idx) => (
           <span className={`movie-genre ${idx === 0 && 'no-bullet'}`} key={idx}>
             {genreMap[genre]}
