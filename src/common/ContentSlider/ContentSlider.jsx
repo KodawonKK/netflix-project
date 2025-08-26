@@ -126,7 +126,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
                     movie={movie}
                     onHover={handleHover}
                     type={isTopRank ? 'toprank' : ''}
-                    kind={kind === 'movie' ? 'movie' : 'tv'}
+                    kind={kind}
                   />
                 </div>
               </SwiperSlide>
@@ -151,7 +151,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
           setSelectedInfo={setSelectedInfo}
           onMouseEnter={() => setHoverCardInfo(hoverCardInfo)}
           onMouseLeave={handleMouseLeave}
-          kind={kind === 'movie' ? 'movie' : 'tv'}
+          kind={kind}
         />
       </div>
 
@@ -160,7 +160,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
           selectedInfoId={selectedInfo.id}
           setOpen={setOpen}
           isOpen={isOpen}
-          kind={kind === 'movie' ? 'movie' : 'tv'}
+          kind={kind}
         />
       )}
     </div>
