@@ -18,6 +18,7 @@ import AddBtn from '../Buttons/AddBtn';
 import PlayModal from '../PlayModal/PlayModal';
 import { usePlayModalStore } from '../../stores/playModalStore';
 import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
+import { useTVVideoQuery } from '../../hooks/tv/useTVVideo';
 
 const PreviewModal = ({
   contentInfo,
@@ -40,10 +41,14 @@ const PreviewModal = ({
     movieGrade,
     tvGrade
   );
-  const video = useMovieVideoQuery(contentId, kind, {
-    keepPreviousData: false,
-  });
-  const findKey = video?.data?.find(item => item.type === 'Trailer');
+  const movieVideo = useMovieVideoQuery(contentId, kind);
+  const tvVideo = useTVVideoQuery(contentId, kind);
+  const video = kind === 'movie' ? movieVideo : tvVideo;
+  const typeMap = {
+    movie: ['Trailer'],
+    tv: ['Teaser', 'Trailer'],
+  };
+  const findKey = video?.data?.find(item => typeMap[kind].includes(item.type));
   const { openModals, closeModal } = usePlayModalStore();
   const playModalKey = `previewModal-${contentId}`;
   const ratingIcons = {

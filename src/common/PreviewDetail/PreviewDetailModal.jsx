@@ -12,6 +12,7 @@ import { useTVDetailFullQuery } from '../../hooks/tv/useTVDetailFull';
 import { mapInfo } from '../../utils/mapInfo';
 import PlayModal from '../PlayModal/PlayModal';
 import { usePlayModalStore } from '../../stores/playModalStore';
+import { useTVVideoQuery } from '../../hooks/tv/useTVVideo';
 
 const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
   const [visibleCount, setVisibleCount] = useState(9);
@@ -22,8 +23,14 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
     kind
   );
   const fullInfo = kind === 'movie' ? movieFullInfo : tvFullInfo;
-  const video = useMovieVideoQuery(selectedInfoId, kind);
-  const findKey = video?.data?.find(item => item.type === 'Trailer');
+  const movieVideo = useMovieVideoQuery(selectedInfoId, kind);
+  const tvVideo = useTVVideoQuery(selectedInfoId, kind);
+  const video = kind === 'movie' ? movieVideo : tvVideo;
+  const typeMap = {
+    movie: ['Trailer'],
+    tv: ['Teaser', 'Trailer'],
+  };
+  const findKey = video?.data?.find(item => typeMap[kind].includes(item.type));
   const { imgUrl, release, runtimeKR, overView, cast, recommend, title } =
     mapInfo(kind, fullInfo);
   const genreMap = Object.values(useMapGenres(fullInfo?.genres)) || {};

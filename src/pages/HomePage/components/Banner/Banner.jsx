@@ -8,13 +8,20 @@ import { useTVDetailFullQuery } from '../../../../hooks/tv/useTVDetailFull';
 import { useMovieVideoQuery } from '../../../../hooks/movie/useMovieVideo';
 import PlayModal from '../../../../common/PlayModal/PlayModal';
 import { usePlayModalStore } from '../../../../stores/playModalStore';
+import { useTVVideoQuery } from '../../../../hooks/tv/useTVVideo';
 
 const Banner = ({ data, kind, isLoading }) => {
   const imgUrl = `https://image.tmdb.org/t/p/original${data?.results[0]?.backdrop_path}`;
   const contentId = data?.results[0]?.id;
   const tvInfo = useTVDetailFullQuery(contentId, kind);
-  const movieInfo = useMovieVideoQuery(contentId, kind);
-  const findKey = movieInfo?.data?.find(item => item.type === 'Trailer');
+  const tvVideo = useTVVideoQuery(contentId, kind);
+  const movieVideo = useMovieVideoQuery(contentId, kind);
+  const video = kind === 'movie' ? movieVideo : tvVideo;
+  const typeMap = {
+    movie: ['Trailer'],
+    tv: ['Teaser', 'Trailer'],
+  };
+  const findKey = video?.data?.find(item => typeMap[kind].includes(item.type));
   const playModalKey = `banner-${contentId}`;
   const { openModals, closeModal } = usePlayModalStore();
 
@@ -41,7 +48,6 @@ const Banner = ({ data, kind, isLoading }) => {
         <PlayModal
           youtubeKey={findKey?.key}
           closeModal={() => closeModal(playModalKey)}
-          kind={'banner'}
         />
       )}
     </div>
