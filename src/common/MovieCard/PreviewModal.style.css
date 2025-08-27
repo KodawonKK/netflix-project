@@ -30,7 +30,7 @@
   outline: none;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.7);
-  padding: 0.4rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 .movie-info-top button:hover {
   border-color: #fff;
@@ -39,15 +39,6 @@
 .info-left {
   display: flex;
   gap: 5px;
-}
-.info-left button:first-child {
-  background: #fff;
-}
-.info-left button:nth-child(2) img {
-  /* transform: scale(3) !important; */
-}
-.info-left img {
-  /* width: 1.5rem; */
 }
 .movie-info {
   display: flex;

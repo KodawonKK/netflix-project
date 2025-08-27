@@ -1,24 +1,23 @@
 import React from 'react';
 import './PreviewModal.style.css';
-import { useMoviesDetailQuery } from '../../hooks/movie/useMovieDetail';
 import { useMoviesCertificationQuery } from '../../hooks/movie/useMovieCertification';
 import { useTVCertificationQuery } from '../../hooks/tv/useTVCertification';
-import { useTVDetailQuery } from '../../hooks/tv/useTVDetail';
 import { motion } from 'framer-motion';
-import { formatRuntime } from '../../utils/formatRuntime';
 import Rating12 from '../../assets/icon/rating12.svg';
 import Rating15 from '../../assets/icon/rating15.svg';
 import Rating19 from '../../assets/icon/rating19.svg';
 import RatingALL from '../../assets/icon/ratingAll.svg';
 import OpenIcon from '../../assets/icon/open.svg';
-import Play from '../../assets/icon/play.svg';
-import Like from '../../assets/icon/like.svg';
-import Plus from '../../assets/icon/plus.svg';
 import { useMapGenres } from '../../hooks/useMapGenres';
 import LikeBtn from '../Buttons/LikeBtn';
 import { mapInfo } from '../../utils/mapInfo';
 import { useTVDetailFullQuery } from '../../hooks/tv/useTVDetailFull';
 import { useMoviesDetailFullQuery } from '../../hooks/movie/useMovieDetailFull';
+import PlayBtn from '../Buttons/PlayBtn';
+import AddBtn from '../Buttons/AddBtn';
+import PlayModal from '../PlayModal/PlayModal';
+import { usePlayModalStore } from '../../stores/playModalStore';
+import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
 
 const PreviewModal = ({
   contentInfo,
@@ -29,16 +28,11 @@ const PreviewModal = ({
   setOpen,
   setSelectedInfo,
 }) => {
-  const { data: movieGrade } = useMoviesCertificationQuery(
-    contentInfo?.id,
-    kind
-  );
-  const { data: tvGrade } = useTVCertificationQuery(contentInfo?.id, kind);
-  const { data: tvFullInfo } = useTVDetailFullQuery(contentInfo?.id, kind);
-  const { data: movieFullInfo } = useMoviesDetailFullQuery(
-    contentInfo?.id,
-    kind
-  );
+  const contentId = contentInfo?.id;
+  const { data: movieGrade } = useMoviesCertificationQuery(contentId, kind);
+  const { data: tvGrade } = useTVCertificationQuery(contentId, kind);
+  const { data: tvFullInfo } = useTVDetailFullQuery(contentId, kind);
+  const { data: movieFullInfo } = useMoviesDetailFullQuery(contentId, kind);
   const fullInfo = kind === 'movie' ? movieFullInfo : tvFullInfo;
   const { runtimeKR, title, movieCert, tvCert } = mapInfo(
     kind,
@@ -46,13 +40,23 @@ const PreviewModal = ({
     movieGrade,
     tvGrade
   );
+  const video = useMovieVideoQuery(contentId, kind, {
+    keepPreviousData: false,
+  });
+  const findKey = video?.data?.find(item => item.type === 'Trailer');
+  const { openModals, closeModal } = usePlayModalStore();
+  const playModalKey = `previewModal-${contentId}`;
   const ratingIcons = {
     12: Rating12,
     15: Rating15,
     19: Rating19,
     ALL: RatingALL,
   };
-  const infoMenuIcons = [Play, Like, Plus];
+  const infoMenuIcons = [
+    <PlayBtn kind="circle" style={{ background: '#fff' }} id={playModalKey} />,
+    <LikeBtn />,
+    <AddBtn />,
+  ];
   const genreMap = useMapGenres(fullInfo?.genres);
   const style = {
     top: 0,
@@ -81,15 +85,9 @@ const PreviewModal = ({
       <div className="preview-movie-info">
         <div className="movie-info-top">
           <div className="info-left">
-            {infoMenuIcons.map((item, idx) =>
-              idx !== 1 ? (
-                <button key={idx}>
-                  <img src={item} alt="" />
-                </button>
-              ) : (
-                <LikeBtn />
-              )
-            )}
+            {infoMenuIcons.map((item, idx) => (
+              <div key={idx}>{item}</div>
+            ))}
           </div>
           <div className="open-info">
             <button
@@ -118,6 +116,12 @@ const PreviewModal = ({
           </span>
         ))}
       </div>
+      {openModals[playModalKey] && (
+        <PlayModal
+          youtubeKey={findKey?.key}
+          closeModal={() => closeModal(playModalKey)}
+        />
+      )}
     </motion.div>
   );
 };

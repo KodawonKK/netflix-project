@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 
 export const usePlayModalStore = create(set => ({
-  isPlayOpen: false,
-  openModal: () => set({ isPlayOpen: true }),
-  closeModal: () => set({ isPlayOpen: false }),
+  openModals: {},
+  openModal: id =>
+    set(state => ({ openModals: { ...state.openModals, [id]: true } })),
+  closeModal: id =>
+    set(state => ({ openModals: { ...state.openModals, [id]: false } })),
 }));

@@ -20,6 +20,7 @@ import Arrow from '../../assets/icon/arrow.png';
 import MovieCard from '../MovieCard/MovieCard';
 import PreviewModal from '../MovieCard/PreviewModal';
 import PreviewDetailModal from '../PreviewDetail/PreviewDetailModal';
+import { usePlayModalStore } from '../../stores/playModalStore';
 
 const ContentSlider = ({ title, data, isTopRank, kind }) => {
   const prevRef = useRef(null);
@@ -29,6 +30,8 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
   const [modalPos, setModalPos] = useState({ top: 0, left: 0 });
   const [selectedInfo, setSelectedInfo] = useState(null);
   const [isOpen, setOpen] = useState(false);
+  const { closeModal } = usePlayModalStore();
+
   const rankImg = {
     1: rank1,
     2: rank2,
@@ -65,6 +68,7 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
   const handleMouseLeave = () => {
     clearTimeout(hoverTimeout.current);
     setHoverCardInfo(null);
+    closeModal(`previewModal-${hoverCardInfo?.id}`);
   };
 
   return (

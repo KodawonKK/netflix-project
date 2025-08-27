@@ -15,6 +15,9 @@
   left: 0;
   bottom: 0;
 }
+.circle {
+  background: #fff !important;
+}
 .likeBtnWrap {
   padding: 0.25rem !important;
   position: relative;

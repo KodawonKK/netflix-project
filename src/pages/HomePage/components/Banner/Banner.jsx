@@ -11,11 +11,12 @@ import { usePlayModalStore } from '../../../../stores/playModalStore';
 
 const Banner = ({ data, kind, isLoading }) => {
   const imgUrl = `https://image.tmdb.org/t/p/original${data?.results[0]?.backdrop_path}`;
-  const tvInfo = useTVDetailFullQuery(data?.results[0].id, kind);
-  // const movieInfo = useMovieVideoQuery(data?.results[0]?.id, kind);
-  const movieInfo = useMovieVideoQuery(data?.results[1]?.id, kind);
+  const contentId = data?.results[0]?.id;
+  const tvInfo = useTVDetailFullQuery(contentId, kind);
+  const movieInfo = useMovieVideoQuery(contentId, kind);
   const findKey = movieInfo?.data?.find(item => item.type === 'Trailer');
-  const { isPlayOpen, openModal, closeModal } = usePlayModalStore();
+  const playModalKey = `banner-${contentId}`;
+  const { openModals, closeModal } = usePlayModalStore();
 
   return (
     <div className="banner-wrap">
@@ -29,15 +30,19 @@ const Banner = ({ data, kind, isLoading }) => {
           {data?.results[0]?.overview}
         </p>
         <div className="banner-btn-wrap">
-          <PlayBtn size="sm" name="banner-btn" openModal={openModal} />
+          <PlayBtn size="sm" name="banner-btn" id={playModalKey} />
           <Button variant="secondary" size="sm" className="banner-btn">
             <img src={InfoIcon} alt="상세 정보" />
             <span>상세 정보</span>
           </Button>
         </div>
       </div>
-      {isPlayOpen && (
-        <PlayModal youtubeKey={findKey?.key} closeModal={closeModal} />
+      {openModals[playModalKey] && (
+        <PlayModal
+          youtubeKey={findKey?.key}
+          closeModal={() => closeModal(playModalKey)}
+          kind={'banner'}
+        />
       )}
     </div>
   );
