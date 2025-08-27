@@ -2,7 +2,7 @@ import React from 'react';
 import CloseIcon from '../../assets/icon/close.svg';
 import styles from '../PlayModal/PlayModal.module.css';
 
-const PlayModal = ({ youtubeKey, closeModal, kind }) => {
+const PlayModal = ({ youtubeKey, closeModal }) => {
   const src = `https://www.youtube.com/embed/${youtubeKey}`;
 
   return (
