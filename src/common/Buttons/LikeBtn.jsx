@@ -11,7 +11,7 @@ const LikeBtn = () => {
   const handleLikeHover = () => {
     hoverTimeout.current = setTimeout(() => {
       setShowHover(true);
-    }, 200);
+    }, 300);
   };
   const handleLikeLeave = () => {
     clearTimeout(hoverTimeout.current);

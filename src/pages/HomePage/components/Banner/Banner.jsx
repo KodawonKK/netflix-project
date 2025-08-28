@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Banner.style.css';
 import Button from 'react-bootstrap/Button';
 import InfoIcon from '../../../../assets/icon/info.svg';
-import { Alert } from 'bootstrap';
+// import { Alert } from 'bootstrap';
 import PlayBtn from '../../../../common/Buttons/PlayBtn';
-import { useTVDetailFullQuery } from '../../../../hooks/tv/useTVDetailFull';
 import { useMovieVideoQuery } from '../../../../hooks/movie/useMovieVideo';
 import PlayModal from '../../../../common/PlayModal/PlayModal';
 import { usePlayModalStore } from '../../../../stores/playModalStore';
@@ -13,7 +12,6 @@ import { useTVVideoQuery } from '../../../../hooks/tv/useTVVideo';
 const Banner = ({ data, kind, isLoading }) => {
   const imgUrl = `https://image.tmdb.org/t/p/original${data?.results[0]?.backdrop_path}`;
   const contentId = data?.results[0]?.id;
-  const tvInfo = useTVDetailFullQuery(contentId, kind);
   const tvVideo = useTVVideoQuery(contentId, kind);
   const movieVideo = useMovieVideoQuery(contentId, kind);
   const video = kind === 'movie' ? movieVideo : tvVideo;
