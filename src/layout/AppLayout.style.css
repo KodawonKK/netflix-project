@@ -1,5 +1,4 @@
 .navbar {
-  /* position: sticky; */
   position: fixed;
   width: 100%;
   top: 0px;
@@ -18,11 +17,42 @@
 }
 .nav-right {
   gap: 10px;
+  align-items: center;
+}
+.search-wrap {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid hsla(0, 0%, 100%, 0.85);
+  opacity: 0;
+  width: 0px;
+}
+.nav-right.open .search-wrap {
+  display: flex;
+  align-items: center;
+  width: 212px;
+  opacity: 1;
+  padding: 4px 14px 7px 2px;
+  transition: width 0.4s ease, opacity 0.3s ease;
+}
+.nav-right.open > .search-btn {
+  display: none;
 }
 .search-btn {
   border: 0;
   background: none;
-  width: 22px;
+  width: 33px;
+  padding: 0 6px;
+  cursor: pointer;
+}
+.nav-right.open > .search-wrap input {
+  width: 100%;
+}
+.search-wrap input {
+  border: none;
+  outline: none;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  font-size: 14px;
+  width: 0px;
 }
 .profile-wrap {
   background: #fff;

@@ -30,7 +30,6 @@ const PreviewModal = ({
   setSelectedInfo,
 }) => {
   const contentId = contentInfo?.id;
-  const hoverTimeOut = useRef(null);
   const { data: movieGrade } = useMoviesCertificationQuery(contentId, kind);
   const { data: tvGrade } = useTVCertificationQuery(contentId, kind);
   const { data: tvFullInfo } = useTVDetailFullQuery(contentId, kind);

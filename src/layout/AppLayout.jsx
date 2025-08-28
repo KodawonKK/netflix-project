@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../layout/AppLayout.style.css';
 import Container from 'react-bootstrap/Container';
@@ -13,6 +13,8 @@ import Footer from './Footer';
 
 const AppLayout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearch, setIsSearch] = useState(null);
+  const searchRef = useRef(null);
 
   const menu = [
     { title: '홈', url: '/' },
@@ -21,6 +23,10 @@ const AppLayout = () => {
     { title: '내가 찜한 리스트', url: '/' },
   ];
 
+  const clickSearch = e => {
+    setIsSearch(true);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -28,6 +34,19 @@ const AppLayout = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = e => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setIsSearch(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   return (
@@ -58,11 +77,22 @@ const AppLayout = () => {
                 </Nav.Link>
               ))}
             </Nav>
-            <Form className="d-flex nav-right">
+            <Form className={`d-flex nav-right ${isSearch ? 'open' : 'close'}`}>
               {/* 검색 버튼 */}
-              <button className="search-btn">
+              <div className="search-btn" onClick={clickSearch}>
                 <img src={searchIcon} alt="search" width="100%" />
-              </button>
+              </div>
+              <div className={`search-wrap`} ref={searchRef}>
+                <div className="search-btn">
+                  <img src={searchIcon} alt="search" width="100%" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="제목, 사람, 장르"
+                  id="search"
+                  name="search"
+                />
+              </div>
               {/* 프로필 */}
               <div className="profile-wrap">
                 <img src={ProfileImg} alt="profileimage" width="100%" />
