@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import './PreviewModal.style.css';
 import { useMoviesCertificationQuery } from '../../hooks/movie/useMovieCertification';
 import { useTVCertificationQuery } from '../../hooks/tv/useTVCertification';
@@ -19,6 +19,7 @@ import PlayModal from '../PlayModal/PlayModal';
 import { usePlayModalStore } from '../../stores/playModalStore';
 import { useMovieVideoQuery } from '../../hooks/movie/useMovieVideo';
 import { useTVVideoQuery } from '../../hooks/tv/useTVVideo';
+import { usePreviewDetailModalStore } from '../../stores/previewDetailModalStore';
 
 const PreviewModal = ({
   contentInfo,
@@ -26,7 +27,6 @@ const PreviewModal = ({
   onMouseEnter,
   onMouseLeave,
   kind,
-  setOpen,
   setSelectedInfo,
 }) => {
   const contentId = contentInfo?.id;
@@ -50,6 +50,7 @@ const PreviewModal = ({
   };
   const findKey = video?.data?.find(item => typeMap[kind].includes(item.type));
   const { openModals, closeModal } = usePlayModalStore();
+  const { openDetailModal } = usePreviewDetailModalStore();
   const playModalKey = `previewModal-${contentId}`;
   const ratingIcons = {
     12: Rating12,
@@ -97,7 +98,7 @@ const PreviewModal = ({
           <div className="open-info">
             <button
               onClick={() => {
-                setOpen(true);
+                openDetailModal(contentId);
                 setSelectedInfo(fullInfo);
               }}
             >

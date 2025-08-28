@@ -13,8 +13,9 @@ import { mapInfo } from '../../utils/mapInfo';
 import PlayModal from '../PlayModal/PlayModal';
 import { usePlayModalStore } from '../../stores/playModalStore';
 import { useTVVideoQuery } from '../../hooks/tv/useTVVideo';
+import { usePreviewDetailModalStore } from '../../stores/previewDetailModalStore';
 
-const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
+const PreviewDetailModal = ({ kind, selectedInfoId }) => {
   const [visibleCount, setVisibleCount] = useState(9);
   const [isClick, setClick] = useState(false);
   const { data: tvFullInfo } = useTVDetailFullQuery(selectedInfoId, kind);
@@ -35,11 +36,12 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
     mapInfo(kind, fullInfo);
   const genreMap = Object.values(useMapGenres(fullInfo?.genres)) || {};
   const { openModals, closeModal } = usePlayModalStore();
+  const { isDetailModalOpen, closeDetailModal } = usePreviewDetailModalStore();
   const playModalKey = `previewDetailModal-${selectedInfoId}`;
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
-      setOpen(false);
+      closeDetailModal(selectedInfoId);
     }
   };
 
@@ -53,7 +55,7 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isDetailModalOpen.length !== 0) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -61,14 +63,19 @@ const PreviewDetailModal = ({ isOpen, setOpen, kind, selectedInfoId }) => {
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [isOpen]);
+  }, [isDetailModalOpen]);
 
   return (
     <div className="preview-detail-wrap" onClick={handleOverlayClick}>
       <div className="preview-detail">
         <div className="preview-detail-top">
           <div className="preview-detail-overlay"></div>
-          <span className="close-icon" onClick={() => setOpen(false)}>
+          <span
+            className="close-icon"
+            onClick={() => {
+              closeDetailModal(selectedInfoId);
+            }}
+          >
             <img src={CloseIcon} alt="닫기" />
           </span>
           <img src={imgUrl} alt="" width="100%" loading="lazy" />

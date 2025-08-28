@@ -21,6 +21,7 @@ import MovieCard from '../MovieCard/MovieCard';
 import PreviewModal from '../MovieCard/PreviewModal';
 import PreviewDetailModal from '../PreviewDetail/PreviewDetailModal';
 import { usePlayModalStore } from '../../stores/playModalStore';
+import { usePreviewDetailModalStore } from '../../stores/previewDetailModalStore';
 
 const ContentSlider = ({ title, data, isTopRank, kind }) => {
   const prevRef = useRef(null);
@@ -29,8 +30,8 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
   const [hoverCardInfo, setHoverCardInfo] = useState(null);
   const [modalPos, setModalPos] = useState({ top: 0, left: 0 });
   const [selectedInfo, setSelectedInfo] = useState(null);
-  const [isOpen, setOpen] = useState(false);
   const { closeModal } = usePlayModalStore();
+  const { isDetailModalOpen } = usePreviewDetailModalStore();
 
   const rankImg = {
     1: rank1,
@@ -151,7 +152,6 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
         <PreviewModal
           contentInfo={hoverCardInfo}
           position={modalPos}
-          setOpen={setOpen}
           setSelectedInfo={setSelectedInfo}
           onMouseEnter={() => setHoverCardInfo(hoverCardInfo)}
           onMouseLeave={handleMouseLeave}
@@ -159,13 +159,8 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
         />
       </div>
 
-      {isOpen && (
-        <PreviewDetailModal
-          selectedInfoId={selectedInfo.id}
-          setOpen={setOpen}
-          isOpen={isOpen}
-          kind={kind}
-        />
+      {isDetailModalOpen[selectedInfo?.id] && (
+        <PreviewDetailModal selectedInfoId={selectedInfo?.id} kind={kind} />
       )}
     </div>
   );

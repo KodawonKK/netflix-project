@@ -2,12 +2,13 @@ import React from 'react';
 import './Banner.style.css';
 import Button from 'react-bootstrap/Button';
 import InfoIcon from '../../../../assets/icon/info.svg';
-// import { Alert } from 'bootstrap';
 import PlayBtn from '../../../../common/Buttons/PlayBtn';
 import { useMovieVideoQuery } from '../../../../hooks/movie/useMovieVideo';
 import PlayModal from '../../../../common/PlayModal/PlayModal';
 import { usePlayModalStore } from '../../../../stores/playModalStore';
 import { useTVVideoQuery } from '../../../../hooks/tv/useTVVideo';
+import PreviewDetailModal from '../../../../common/PreviewDetail/PreviewDetailModal';
+import { usePreviewDetailModalStore } from '../../../../stores/previewDetailModalStore';
 
 const Banner = ({ data, kind, isLoading }) => {
   const imgUrl = `https://image.tmdb.org/t/p/original${data?.results[0]?.backdrop_path}`;
@@ -22,6 +23,7 @@ const Banner = ({ data, kind, isLoading }) => {
   const findKey = video?.data?.find(item => typeMap[kind].includes(item.type));
   const playModalKey = `banner-${contentId}`;
   const { openModals, closeModal } = usePlayModalStore();
+  const { isDetailModalOpen, openDetailModal } = usePreviewDetailModalStore();
 
   return (
     <div className="banner-wrap">
@@ -36,7 +38,12 @@ const Banner = ({ data, kind, isLoading }) => {
         </p>
         <div className="banner-btn-wrap">
           <PlayBtn size="sm" name="banner-btn" id={playModalKey} />
-          <Button variant="secondary" size="sm" className="banner-btn">
+          <Button
+            variant="secondary"
+            size="sm"
+            className="banner-btn"
+            onClick={() => openDetailModal(contentId)}
+          >
             <img src={InfoIcon} alt="상세 정보" />
             <span>상세 정보</span>
           </Button>
@@ -47,6 +54,9 @@ const Banner = ({ data, kind, isLoading }) => {
           youtubeKey={findKey?.key}
           closeModal={() => closeModal(playModalKey)}
         />
+      )}
+      {isDetailModalOpen[contentId] && (
+        <PreviewDetailModal kind={kind} selectedInfoId={contentId} />
       )}
     </div>
   );
