@@ -58,6 +58,7 @@
 }
 .notice-wrap {
   cursor: pointer;
+  margin-right: 9px;
 }
 .profile-wrap {
   background: #fff;
