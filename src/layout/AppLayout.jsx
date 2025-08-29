@@ -23,6 +23,7 @@ const AppLayout = () => {
     { title: '영화', url: '/movies' },
     { title: '내가 찜한 리스트', url: '/' },
   ];
+  const profileMenu = ['프로필 관리', '프로필 이전', '계정', '고객센터'];
 
   const clickSearch = e => {
     setIsSearch(true);
@@ -100,6 +101,14 @@ const AppLayout = () => {
               </div>
               <div className="profile-wrap">
                 <img src={ProfileImg} alt="profileimage" width="100%" />
+                <div className="dropdown-icon"></div>
+                <div className="profile-sub-wrap">
+                  {profileMenu.map((item, key) => (
+                    <div className="profile-sub-menu" key={key}>
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
             </Form>
           </Navbar.Collapse>
