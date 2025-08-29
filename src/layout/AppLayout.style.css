@@ -42,6 +42,7 @@
   width: 33px;
   padding: 0 6px;
   cursor: pointer;
+  margin-right: -10px;
 }
 .nav-right.open > .search-wrap input {
   width: 100%;
@@ -53,6 +54,9 @@
   color: #fff;
   font-size: 14px;
   width: 0px;
+}
+.notice-wrap {
+  margin-right: 10px;
 }
 .profile-wrap {
   background: #fff;

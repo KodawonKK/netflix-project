@@ -10,6 +10,7 @@ import logo from '../assets/logo/netflix-logo.png';
 import searchIcon from '../assets/icon/search.png';
 import ProfileImg from '../assets/profile/profile-img.png';
 import Footer from './Footer';
+import NotiIcon from '../assets/icon/notice.svg';
 
 const AppLayout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -82,7 +83,7 @@ const AppLayout = () => {
               <div className="search-btn" onClick={clickSearch}>
                 <img src={searchIcon} alt="search" width="100%" />
               </div>
-              <div className={`search-wrap`} ref={searchRef}>
+              <div className="search-wrap" ref={searchRef}>
                 <div className="search-btn">
                   <img src={searchIcon} alt="search" width="100%" />
                 </div>
@@ -94,6 +95,9 @@ const AppLayout = () => {
                 />
               </div>
               {/* 프로필 */}
+              <div className="notice-wrap">
+                <img src={NotiIcon} alt="알림" />
+              </div>
               <div className="profile-wrap">
                 <img src={ProfileImg} alt="profileimage" width="100%" />
               </div>
