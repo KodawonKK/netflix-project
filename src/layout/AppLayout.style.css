@@ -61,6 +61,9 @@
   margin-right: 9px;
 }
 .profile-wrap {
+  padding: 19px 0;
+}
+.profile-img-wrap {
   background: #fff;
   width: 32px;
   height: 32px;
@@ -87,7 +90,7 @@
 .profile-sub-wrap {
   position: absolute;
   left: 0;
-  top: 65px;
+  top: 73px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid hsla(0, 0%, 100%, 0.15);

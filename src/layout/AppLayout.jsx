@@ -100,8 +100,10 @@ const AppLayout = () => {
                 <img src={NotiIcon} alt="알림" />
               </div>
               <div className="profile-wrap">
-                <img src={ProfileImg} alt="profileimage" width="100%" />
-                <div className="dropdown-icon"></div>
+                <div className="profile-img-wrap">
+                  <img src={ProfileImg} alt="profileimage" width="100%" />
+                  <div className="dropdown-icon"></div>
+                </div>
                 <div className="profile-sub-wrap">
                   {profileMenu.map((item, key) => (
                     <div className="profile-sub-menu" key={key}>
