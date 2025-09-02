@@ -45,3 +45,15 @@
 .banner-btn img {
   width: 20px;
 }
+@media (max-width: 890px) {
+  .banner-title {
+    font-size: 9vw;
+  }
+  .banner-overview {
+    max-width: 50%;
+    font-size: 1.8vw;
+  }
+  .banner-title-wrap {
+    top: 30%;
+  }
+}

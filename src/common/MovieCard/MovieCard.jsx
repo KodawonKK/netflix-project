@@ -8,7 +8,7 @@ const MovieCard = ({ movie, onHover, type, kind }) => {
     type === 'toprank'
       ? `https://media.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`
       : `https://media.themoviedb.org/t/p/w355_and_h200_multi_faces${movie.backdrop_path}`;
-  const movieUrl = `https://www.themoviedb.org/video/play?key=ak2J7Wqsy0c`;
+  // const movieUrl = `https://www.themoviedb.org/video/play?key=ak2J7Wqsy0c`;
 
   return (
     <div className="movie-card-wrap">

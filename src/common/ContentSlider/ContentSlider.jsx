@@ -50,6 +50,20 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
     el: '.custom-pagination',
   };
 
+  const checkOverflow = (left, hoverWidth) => {
+    const screenWidth = window.innerWidth;
+
+    if (left < 0) return 'left'; // 왼쪽 화면 침범
+    if (left + hoverWidth > screenWidth) return 'right'; // 오른쪽 화면 침범
+    return null; // 침범 없음
+  };
+
+  const getOffsetByScreen = () => {
+    const w = window.innerWidth;
+    if (w <= 890) return 50; // 태블릿 모바일
+    return 90; // PC
+  };
+
   const handleHover = (movie, ref) => {
     clearTimeout(hoverTimeout.current);
 
@@ -59,11 +73,21 @@ const ContentSlider = ({ title, data, isTopRank, kind }) => {
     }
 
     const rect = ref.current.getBoundingClientRect();
+    const hoverWidth = 300;
+    let left = rect.left;
+    let top = rect.top;
+
+    let offset = getOffsetByScreen();
+
+    const overflowSide = checkOverflow(left, hoverWidth);
+
+    if (overflowSide === 'right') {
+      console.log('오른쪽 화면을 침범했음');
+      left = window.innerWidth - hoverWidth - offset; // 위치 보정
+    }
+
     setHoverCardInfo(movie);
-    setModalPos({
-      top: rect.top,
-      left: rect.left + 20,
-    });
+    setModalPos({ top, left });
   };
 
   const handleMouseLeave = () => {
