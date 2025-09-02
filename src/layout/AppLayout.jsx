@@ -5,17 +5,24 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo/netflix-logo.png';
 import searchIcon from '../assets/icon/search.png';
 import ProfileImg from '../assets/profile/profile-img.png';
 import Footer from './Footer';
 import NotiIcon from '../assets/icon/notice.svg';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+// import { useSearchMovies } from '../hooks/movie/useSearchMovies';
 
 const AppLayout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearch, setIsSearch] = useState(null);
+  const [result, setResult] = useState([]);
+  const [query, setQuery] = useState('');
+  const [isMobileClick, setMobileClick] = useState(false);
   const searchRef = useRef(null);
+  const mobileMenuRef = useRef();
+  const navigate = useNavigate();
 
   const menu = [
     { title: '홈', url: '/' },
@@ -27,6 +34,13 @@ const AppLayout = () => {
 
   const clickSearch = e => {
     setIsSearch(true);
+  };
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
+      // Enter 입력 시 navigate
+      const value = e.target.value.trim();
+      if (value) navigate(`/search?q=${value}`, { state: { query: value } });
+    }
   };
 
   useEffect(() => {
@@ -51,71 +65,88 @@ const AppLayout = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = e => {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) {
+        setMobileClick(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div>
-      <Navbar
-        expand="lg"
-        className={`header ${isScrolled ? 'scrolled' : ''} navbar`}
-      >
-        <Container fluid>
-          {/* 로고 */}
-          <Navbar.Brand className="text-danger fw-bold">
-            <Link to="/">
-              <div className="logo-wrap">
-                <img src={logo} alt="Netflix Logo" width="100%" />
-              </div>
-            </Link>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px', fontSize: '12px' }}
-              navbarScroll
+      <div className={`header ${isScrolled ? 'scrolled' : ''} navbar`}>
+        <div className="nav-left">
+          <Link to="/">
+            <div className="logo-wrap">
+              <img src={logo} alt="Netflix Logo" width="100%" />
+            </div>
+          </Link>
+          <div className="nav-menu-wrap">
+            <div
+              className="nav-menu-mobile-wrap"
+              ref={mobileMenuRef}
+              onClick={e => {
+                setMobileClick(true);
+              }}
             >
-              {menu.map((item, idx) => (
-                <Nav.Link href={item.url} className="text-white" key={idx}>
-                  {item.title}
-                </Nav.Link>
+              <span>메뉴</span>
+              <div className="dropdown-icon"></div>
+              <div className={`nav-mobile ${isMobileClick ? 'open' : 'close'}`}>
+                {menu.map((item, idx) => (
+                  <Link to={item.url} key={idx} className="nav-menu-mobile">
+                    {item.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {menu.map((item, idx) => (
+              <Link to={item.url} key={idx} className="nav-menu">
+                {item.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className={`d-flex nav-right ${isSearch ? 'open' : 'close'}`}>
+          <div className="search-btn" onClick={clickSearch}>
+            <img src={searchIcon} alt="search" width="100%" />
+          </div>
+          <div className="search-wrap" ref={searchRef}>
+            <div className="search-btn" style={{ margin: 0 }}>
+              <img src={searchIcon} alt="search" width="100%" />
+            </div>
+            <input
+              type="text"
+              placeholder="제목, 사람, 장르"
+              id="search"
+              name="search"
+              onChange={e => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+          <div className="notice-wrap">
+            <img src={NotiIcon} alt="알림" />
+          </div>
+          <div className="profile-wrap">
+            <div className="profile-img-wrap">
+              <img src={ProfileImg} alt="profileimage" width="100%" />
+              <div className="dropdown-icon"></div>
+            </div>
+            <div className="profile-sub-wrap">
+              {profileMenu.map((item, key) => (
+                <div className="profile-sub-menu" key={key}>
+                  {item}
+                </div>
               ))}
-            </Nav>
-            <Form className={`d-flex nav-right ${isSearch ? 'open' : 'close'}`}>
-              {/* 검색 버튼 */}
-              <div className="search-btn" onClick={clickSearch}>
-                <img src={searchIcon} alt="search" width="100%" />
-              </div>
-              <div className="search-wrap" ref={searchRef}>
-                <div className="search-btn">
-                  <img src={searchIcon} alt="search" width="100%" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="제목, 사람, 장르"
-                  id="search"
-                  name="search"
-                />
-              </div>
-              {/* 프로필 */}
-              <div className="notice-wrap">
-                <img src={NotiIcon} alt="알림" />
-              </div>
-              <div className="profile-wrap">
-                <div className="profile-img-wrap">
-                  <img src={ProfileImg} alt="profileimage" width="100%" />
-                  <div className="dropdown-icon"></div>
-                </div>
-                <div className="profile-sub-wrap">
-                  {profileMenu.map((item, key) => (
-                    <div className="profile-sub-menu" key={key}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Form>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+            </div>
+          </div>
+        </div>
+      </div>
       <Outlet />
       <Footer />
     </div>

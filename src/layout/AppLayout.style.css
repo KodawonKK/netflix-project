@@ -15,6 +15,23 @@
 .logo-wrap {
   width: 5.8rem;
 }
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+.nav-menu-wrap {
+  color: #fff;
+  font-size: 12px;
+  max-height: 100px;
+}
+.nav-menu-mobile-wrap,
+.nav-mobile {
+  display: none;
+}
+.nav-menu {
+  margin-left: 18px;
+  color: #fff;
+}
 .nav-right {
   gap: 10px;
   align-items: center;
@@ -108,4 +125,71 @@
 }
 .profile-sub-menu:hover {
   text-decoration: underline;
+}
+
+/* 반응형  */
+
+/* 모바일 */
+@media (max-width: 890px) {
+  .navbar {
+    min-height: 50px;
+  }
+  .nav-menu {
+    display: none;
+  }
+  .nav-menu-mobile-wrap {
+    display: flex;
+    margin-left: 18px;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+  }
+  .nav-mobile.open {
+    display: flex;
+  }
+  .nav-mobile {
+    width: 260px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-top: 3px solid #e5e5e5;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50px;
+    transform: translate(-50%, 0);
+    display: none;
+    flex-direction: column;
+  }
+  .nav-mobile::before {
+    content: '';
+    border: 7px solid transparent;
+    border-bottom-color: #e5e5e5;
+    height: 0;
+    left: 50%;
+    margin-left: -7px;
+    position: absolute;
+    top: -16px;
+    width: 0;
+  }
+  .nav-menu-mobile {
+    color: #fff;
+    padding: 18px 0;
+  }
+  .nav-menu-mobile:hover {
+    background-color: hsla(0, 0%, 100%, 0.05);
+  }
+  .profile-wrap {
+    padding: 14px 0;
+  }
+  .banner-title {
+    font-size: 9vw;
+  }
+  .banner-overview {
+    font-size: 1.8vw;
+  }
+  .banner-title-wrap {
+    top: 30%;
+  }
+  .movie-slider-wrap h1 {
+    font-size: 1.9vw;
+  }
 }

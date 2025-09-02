@@ -6,7 +6,7 @@
 .footer {
   margin: 0 auto;
   max-width: 980px;
-  /* padding: 0 4%; */
+  padding: 0 4%;
 }
 .social-links {
   display: flex;
@@ -24,7 +24,11 @@
   flex-basis: 25%;
   margin-bottom: 16px;
   padding-right: 22px;
+  cursor: pointer;
 }
 .copyright {
   font-size: 11px;
+}
+
+@media (max-width: 890px) {
 }
