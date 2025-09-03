@@ -29,6 +29,9 @@
 .copyright {
   font-size: 11px;
 }
+.copy-text a {
+  color: grey !important;
+}
 
 @media (max-width: 890px) {
 }

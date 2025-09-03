@@ -48,3 +48,17 @@
 .notGood {
   transform: translateY(2px) rotateZ(180deg);
 }
+@media (max-width: 500px) {
+  .commonDetail {
+    padding: 0.1rem;
+  }
+  .commonDetail img {
+    padding: 0.2rem;
+  }
+  .likeBtnWrap {
+    padding: 0.1rem !important;
+  }
+  .likeBtn {
+    transform: scale(2.3);
+  }
+}

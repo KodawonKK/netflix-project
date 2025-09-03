@@ -103,3 +103,13 @@
   width: 15px;
 }
 /***** Swiper End *****/
+@media (max-width: 890px) {
+  .movie-slider-wrap h1 {
+    font-size: 1.9vw;
+  }
+}
+@media (max-width: 500px) {
+  .movie-slider-wrap {
+    padding-top: 40px;
+  }
+}

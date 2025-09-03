@@ -57,3 +57,8 @@
     top: 30%;
   }
 }
+@media (max-width: 500px) {
+  .banner-overview {
+    font-size: 2vw;
+  }
+}

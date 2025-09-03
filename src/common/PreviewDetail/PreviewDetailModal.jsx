@@ -94,7 +94,7 @@ const PreviewDetailModal = ({ kind, selectedInfoId }) => {
               <span>
                 {release} {runtimeKR}
               </span>
-              <div>{overView}</div>
+              <div className="preview-detail-txt">{overView}</div>
             </div>
             <div className="preview-detail-right">
               <div className="preview-info">
